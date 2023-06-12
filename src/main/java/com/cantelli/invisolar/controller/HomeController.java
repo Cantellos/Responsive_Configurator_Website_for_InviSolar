@@ -28,7 +28,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
-
 @Controller
 public class HomeController {
 
@@ -170,7 +169,7 @@ public class HomeController {
         model.addAttribute("user", user);
 
         model.addAttribute("classActiveEdit", true);
-        return "login";
+        return "myProfile";
     }
 
     @RequestMapping("/configurator")
