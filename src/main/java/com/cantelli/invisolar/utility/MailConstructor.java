@@ -17,13 +17,13 @@ public class MailConstructor {
 			String contextPath, Locale locale, String token, User user, String password
 	) {
 
-		String url = contextPath + "/newUser?token="+token;
+		String url = contextPath + "/signin?token="+token;
 		String message = "\nPlease click on this link to verify your email and edit your personal information. Your password is: \n"+password;
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo(user.getEmail());
-		email.setSubject("Le's Bookstore - New User");
+		email.setSubject("InviSolar - New User");
 		email.setText(url+message);
-		email.setFrom(env.getProperty("support.email"));
+		email.setFrom("andrea.cantelli@edu.unife.it");
 		return email;
 
 	}

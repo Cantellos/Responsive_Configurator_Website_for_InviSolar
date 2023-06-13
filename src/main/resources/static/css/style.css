@@ -96,7 +96,7 @@ Login
     transform: translate(-50%, -50%);
 }
 
-.login{
+.login, .login:hover{
     color: rgb(11,66,142);
     font-size: 20px;
 }

@@ -134,7 +134,7 @@ public class HomeController {
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(user, token);
 
-        String appUrl = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+        String appUrl = "https://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
 
         SimpleMailMessage email = mailConstructor.constructResetTokenEmail(appUrl, request.getLocale(), token, user, password);
 

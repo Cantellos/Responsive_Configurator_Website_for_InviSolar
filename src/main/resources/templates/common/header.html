@@ -56,6 +56,11 @@
                         </div>
                         <div sec:authorize="isAuthenticated()">
                             <li class="nav-item">
+                                <a class="btn btn-outline-light" id="myProfileBtn" href="/myProfile">My Account</a>
+                            </li>
+                        </div>
+                        <div sec:authorize="isAuthenticated()">
+                            <li class="nav-item">
                                 <a class="btn btn-outline-light" id="logoutBtn" href="/logout">Logout</a>
                             </li>
                         </div>
