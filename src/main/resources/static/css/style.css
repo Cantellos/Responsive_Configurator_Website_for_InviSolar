@@ -1,5 +1,5 @@
 .body{
-    margin-top: 153px;
+    margin-top: 127px;
 }
 /*
 Navbar
@@ -7,12 +7,12 @@ Navbar
 #logo{
     transform: translateY(0.5px);
     margin-left: 30px;
-    width: 400px;
+    width: 315px;
 }
 .nav-item{
     margin-left: 15px;
     margin-right: 15px;
-    font-size: 26px;
+    font-size: 23px;
 }
 .nav-link{
     color: white;
@@ -20,7 +20,7 @@ Navbar
 .btn-outline-light{
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 25px;
+    font-size: 23px;
 }
 
 #loginBtn, #logoutBtn{
@@ -39,7 +39,7 @@ Carousel
     text-align: center;
 }
 #carousel-indicator1, #carousel-indicator2, #carousel-indicator3 {
-    width: 8vw;
+    width: 7vw;
     height: 0.4vw;
     margin-left: 0.5vw;
 }
@@ -50,7 +50,7 @@ Carousel
 .carousel-caption {
     width: auto;
     text-align: center;
-    top: 70%;
+    top: 75%;
     bottom: initial;
 }
 .h5{
@@ -80,7 +80,7 @@ Login
     border-color: rgb(11,66,142);
 }
 .form-logo{
-    max-width: 90%; height: auto;
+    max-width: 85%; height: auto;
 }
 #video {
     position:fixed;
@@ -100,15 +100,36 @@ Login
     color: rgb(11,66,142);
     font-size: 20px;
 }
-.login-button{
+.invisolar-button{
     font-size: 20px;
     background-color: rgb(11,66,142);
     border-color: rgb(11,66,142);
 }
-
+/*
+MyProfile
+*/
 .panel-body{
     margin: 15px 15px 0px 15px;
 }
 .form-group{
     font-size: 20px;
+}
+.form-control{
+    margin-top: 5px;
+}
+.error{
+    justify-content: center;
+}
+/*
+General
+*/
+.invisolar{
+    color: white;
+    background-color: rgb(11,66,142);
+    border-color: rgb(11,66,142);
+}
+.p{
+    font-size:10px;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
 }

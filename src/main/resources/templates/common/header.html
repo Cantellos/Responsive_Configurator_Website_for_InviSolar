@@ -35,12 +35,31 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/configurator">Configurator</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/booking">Book a visit</a>
-                        </li>
+                        <div sec:authorize="isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profiling">House Profiling</a>
+                            </li>
+                        </div>
+                        <div sec:authorize="isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/configurator">Configurator</a>
+                            </li>
+                        </div>
+                        <div sec:authorize="isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/booking">Book a visit</a>
+                            </li>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">Configurator</a>
+                            </li>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">Book a visit</a>
+                            </li>
+                        </div>
                         <li class="nav-item">
                             <a class="nav-link" href="/faq">FAQ</a>
                         </li>
@@ -51,17 +70,17 @@
                     <ul class="navbar-nav ms-auto">
                         <div sec:authorize="!isAuthenticated()">
                             <li class="nav-item">
-                                <a class="btn btn-outline-light" id="loginBtn" href="/login">Login</a>
+                                <a class="btn btn-outline-light me-1" id="loginBtn" th:href="@{/login}">Login</a>
                             </li>
                         </div>
                         <div sec:authorize="isAuthenticated()">
                             <li class="nav-item">
-                                <a class="btn btn-outline-light" id="myProfileBtn" href="/myProfile">My Account</a>
+                                <a class="btn btn-outline-light" id="myProfileBtn" th:href="@{/myProfile}">My Account</a>
                             </li>
                         </div>
                         <div sec:authorize="isAuthenticated()">
                             <li class="nav-item">
-                                <a class="btn btn-outline-light" id="logoutBtn" href="/logout">Logout</a>
+                                <a class="btn btn-outline-light me-1" id="logoutBtn" th:href="@{/logout}">Logout</a>
                             </li>
                         </div>
 

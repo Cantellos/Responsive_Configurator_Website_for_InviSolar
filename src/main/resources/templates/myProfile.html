@@ -7,129 +7,98 @@
 <div th:replace="~{common/header :: navbar}"></div>
 
 <!-- Main Container -->
-<div class="container">
+<div class="container w-50">
 
-  <div class="row" style="margin-bottom: -100px;">
-    <div class="col-xs-8">
-      <h2 class="section-headline">
-        <h2 class="section-headline">
-          <span th:text="${#strings.toUpperCase(user.username)}"></span>
-        </h2>
-      </h2>
-    </div>
-  </div>
-
-  <hr style="position: absolute; width: 100%; height: 6px; background-color: #333; z-index: -1; margin-top: -80px;"/>
-
-  <div class="row" style="margin-top: 60px;">
-    <div class="col-xs-9 col-xs-offset-3">
-
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs">
-        <li th:classappend="${classActiveEdit}? 'active'"><a
-                href="#tab-1" data-toggle="tab"><span style="color: red;">Edit</span></a></li>
-        <!-- <li th:classappend="${classActiveOrders}? 'active'"><a
-                href="#tab-2" data-toggle="tab"><span style="color: red;">Orders</span></a></li>
-        <li th:classappend="${classActiveBilling}? 'active'"><a
-                href="#tab-3" data-toggle="tab"><span style="color: red;">Billing</span></a></li>
-        <li th:classappend="${classActiveShipping}? 'active'"><a
-                href="#tab-4" data-toggle="tab"><span style="color: red;">Shipping</span></a></li> -->
-      </ul>
-
-      <!-- Tab panels -->
-      <div class="tab-content">
+    <h2 class="section-headline text-center pt-4 mb-2">
+      <span th:text="${#strings.toUpperCase(user.username)}"></span><span class="tab"> - </span>
+      <span th:text="${user.email}"></span>
+    </h2>
+      <hr style="alignment: center; border: 1px solid; width: 100%;">
+    <h2 class="section-headline text-center my-2">
+      <span th:if="${firstTime}">Firstly end your account configuration</span>
+      <span th:if="!${firstTime}">Edit your profile information</span>
+    </h2>
 
         <!-- Edit user information -->
-        <div class="tab-pane fade" id="tab-1"
-             th:classappend="${classActiveEdit}? 'in active'">
-          <div class="panel-group">
-            <div class="panel panel-default" style="border: none;">
-              <div class="panel-body"
-                   style="background-color: #ededed; margin-top: 20px;">
-                <form th:action="@{/updateUserInfo}" method="post">
-                  <input type="hidden" name="id" th:value="${user.id}" />
+        <div class="container mt-4">
 
-                  <div class="bg-info" th:if="${updateUserInfo}">User info
-                    updated.
-                  </div>
+            <form th:action="@{/editUserInfo}" method="post">
+                <input type="hidden" name="username" th:value="${username}"/>
 
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-xs-6">
-                        <label for="firstName">First Name</label> <input
-                              type="text" class="form-control" id="firstName"
-                              name="firstName" th:value="${user.firstName}"/>
-                      </div>
-                      <div class="col-xs-6">
-                        <label for="lastName">Last Name</label> <input type="text"
-                                                                       class="form-control"
-                                                                       id="lastName"
-                                                                       name="lastName"
-                                                                       th:value="${user.lastName}"/>
-                      </div>
+                <div class="container w-75 justify-content-center">
+                    <div class="bs rounded-3 mb-1 px-2 py-1 invisolar text-center" th:if="${updatedUserInfo}">
+                        User information updated.
                     </div>
-                  </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="userName">Username</label> ' <input type="text"
-                                                                    class="form-control"
-                                                                    id="userName" name="username"
-                                                                    th:value="${user.username}"/>
-                  </div>
+                <div class="form-group mt-2">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control"
+                       id="firstName" name="firstName"
+                       th:value="${user.firstName}"/>
+                </div>
 
-                  <div class="form-group">
-                    <label for="userName">Phone Number</label> ' <input type="text"
-                                                                    class="form-control"
-                                                                    id="phone" name="phone"
-                                                                    th:value="${user.phone}"/>
-                  </div>
+                <div class="form-group mt-2">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control"
+                       id="lastName" name="lastName"
+                       th:value="${user.lastName}"/>
+                </div>
 
-                  <div class="form-group">
-                    <label for="currentPassword">Current Password</label> '<input
-                          type="text" class="form-control" id="currentPassword"
-                          name="currentPassword" th:value="${currentPassword}"/>
-                  </div>
-                  <p style="color: #828282">Enter your current password to
-                    change the email address or password.</p>
+                <div class="form-group mt-2">
+                    <label for="email">Email</label>
+                    <span class="error" style="color: red;" th:if="${emailExists}">
+                    (This email it's already used. Choose a different one)</span>
+                    <input type="text" class="form-control"
+                       id="email" name="email"
+                       th:value="${user.email}"/>
+                </div>
 
-                  <div class="form-group">
-                    <label for="email">* Email Address</label> ' <input
-                          type="text" class="form-control" id="email" name="email"
-                          th:value="${user.email}"/>
-                  </div>
-                  <p style="color: #828282">A valid email address. All
-                    emails from the system withll be sent to this address. The
-                    email address is not made public and will only be used if you
-                    wish to receive a new password or wish to receive certain
-                    notification.</p>
+                <div class="form-group mt-2">
+                    <label for="password">Password</label>
+                    <span class="error" style="color: red;" th:if="${passwordTooShort}">
+                    (This password is too short, insert a longer one)</span>
+                    <input type="text" class="form-control"
+                       id="password" name="password"
+                       th:value="${user.password}"/>
+                </div>
 
-                  <div class="form-group">
-                    <label for="txtNewPassword">Password</label> ' <input
-                          type="password" class="form-control" id="txtNewPassword"
-                          name="newPassword"/>
-                  </div>
+                <div class="form-group mt-2">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" class="form-control"
+                       id="phone" name="phone"
+                       th:value="${user.phone}"/>
+                </div>
 
-                  <div class="form-group">
-                    <label for="txtConfirmPassword">Confirm Password</label> ' <input
-                          type="password" class="form-control" id="txtConfirmPassword"/>
-                  </div>
-                  <p style="color: #828282">To change the current user
-                    password, enter the new password in both fields.</p>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary invisolar-button"> Save changes to your account </button>
+                </div>
 
-                  <button type="submit" class="btn btn-primary">Save changes to your account</button>
+            </form>
 
-                </form>
-              </div>
+            <div class="text-center mt-4">
+                <h4> Change your username here </h4>
             </div>
-          </div>
+
+            <form class="form" id="usernameForm" th:action="@{/updateUsername}" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="email" th:value="${email}"/>
+                    <label for="userName">Username</label>
+                    <span class="error" style="color: red;" th:if="${usernameExists}">
+                      This username is already used. Choose a different one.</span>
+                    <input type="text" class="form-control"
+                           id="userName" name="username"
+                           th:value="${user.username}"/>
+                </div>
+                <p style="color: #828282">Enter your username here. Choose it wisely because it must be unique.</p>
+
+                <div class="text-center">
+                    <button id="usernameFormSubmitBtn" type="submit" class="btn btn-primary invisolar-button">Save</button>
+                </div>
+            </form>
+
         </div>
-
-
-      </div>
-    </div>
-  </div>
 </div>
-
 <!-- end of Main Container -->
 
 <div th:replace="~{common/header.html :: body-bottom-scripts}"></div>

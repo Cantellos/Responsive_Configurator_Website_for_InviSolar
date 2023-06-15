@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head div th:replace="~{common/header.html :: common-header}"></head>
+
+<body class="body">
+
+<div th:replace="~{common/header :: navbar}"></div>
+
+<!-- Main Container -->
+<div class="container w-50">
+
+  <h2 class="section-headline text-center pt-4 mb-2">
+    <span th:text="${user.username}"></span> - House Profiling
+  </h2>
+
+  <!-- Edit user information -->
+  <div class="container mt-4">
+    <div class="container w-75 justify-content-center">
+      <div class="bs rounded-3 mb-1 px-2 py-1 invisolar text-center" th:if="${updatedHouseProfile}">
+        House profile updated.
+      </div>
+    </div>
+
+    <div th:if="${!startingPower}">
+      <span>Your actual annual power consumption is:</span><span th:value="${profile.startPower}"></span>
+    </div>
+
+    <div th:if="${!startingPower}">
+      <h4> Do you know your annual electric consumption (kW) ? </h4>
+      <div>
+        <button class="btn btn-primary invisolar-button" id="yesPower">Yes</button>
+        <button class="btn btn-primary invisolar-button" id="noPower">No</button>
+      </div>
+
+      <form class="form" id="noPowerForm" th:action="@{/startingpowerForm}" method="post" style="display:none;">
+        <div class="form-group mt-2">
+          <label for="actualPower">Insert here your annual electric consumption (number of kW)</label>
+          <input type="number" class="form-control"
+                 id="actualPower" name="actualPower"
+                 th:value="${profile.startPower}"/>
+        </div>
+      </form>
+
+      <form class="form" id="yesPowerForm" th:action="@{/startingpowerForm}" method="post" style="display:none;">
+        <div class="form-group mt-2">
+          <label for="numPeople">Insert here the number of people living in the house</label>
+          <input type="number" class="form-control"
+                 id="numPeople" name="numPeople"
+                 th:value="${profile.numPeople}"/>
+        </div>
+      </form>
+    </div>
+
+    <form th:action="@{/profilingForm}" method="post">
+
+      <div class="container justify-content-center">
+
+        <div class="form-group">
+          <h4>In the future, are you going to use an electric boiler for house's heating?</h4>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="boilerCheckbox1" value="true">
+            <label class="form-check-label" for="boilerCheckbox1">Yes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="boilerCheckbox2" value="false">
+            <label class="form-check-label" for="boilerCheckbox2">No</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h4>In the future, are you going to have an electric car and its domestic charging station?</h4>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="carCheckbox1" value="true">
+            <label class="form-check-label" for="carCheckbox1">Yes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="carCheckbox2" value="false">
+            <label class="form-check-label" for="carCheckbox2">No</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h4>How many kilometers do you expect to drive with your electric car each year?</h4>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="kmCheckbox1" value="1000">
+              <label class="form-check-label" for="kmCheckbox1">Less then 15.000</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="kmCheckbox2" value="2000">
+              <label class="form-check-label" for="kmCheckbox2">Between 15.000 and 25.000</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="kmCheckbox3" value="3000">
+              <label class="form-check-label" for="kmCheckbox3">Between 25.000 and 35.000</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="kmCheckbox4" value="4000">
+              <label class="form-check-label" for="kmCheckbox4">More than 35.0000</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <h4> What direction does your roof face? </h4>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="orienationCheckbox1" value="true">
+            <label class="form-check-label" for="orienationCheckbox1">North or West</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="orienationCheckbox2" value="false">
+            <label class="form-check-label" for="orienationCheckbox2">South or East</label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary invisolar-button"> Calculate your annual electric consumption </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+<!-- end of Main Container -->
+
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
+</body>
+<footer>
+  <div th:replace="~{common/footer.html :: footer}"></div>
+</footer>
+</html>
