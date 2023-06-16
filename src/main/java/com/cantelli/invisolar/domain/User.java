@@ -19,11 +19,13 @@ public class User implements UserDetails{
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private Long id;
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
     private String firstName;
     private String lastName;
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private String email;
     private String phone;
     private boolean enabled=true;

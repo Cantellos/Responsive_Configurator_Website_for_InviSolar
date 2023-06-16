@@ -1,6 +1,7 @@
 package com.cantelli.invisolar.config;
 
 import com.cantelli.invisolar.service.impl.UserSecurityService;
+import com.cantelli.invisolar.utility.SecurityUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -22,6 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserSecurityService userSecurityService;
 
+	private BCryptPasswordEncoder passwordEncoder() {
+		return SecurityUtility.passwordEncoder();
+	}
+
 	private static final String[] PUBLIC_MATCHERS = {
 			"/css/**",
 			"/image/**",
@@ -30,11 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/",
 			"/index",
 			"/forgotPassword",
+			"/login",
 			"/signin",
 			"/myAccount",
 			"/faq",
 			"/about",
 			"/fonts/**"
+
 	};
 
 	@Override
@@ -48,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.csrf().disable().cors().disable()
 				.formLogin().failureUrl("/login?error")
-				.defaultSuccessUrl("/")
+				//.defaultSuccessUrl("/")
 				.loginPage("/login").permitAll()
 				.and()
 				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -57,9 +65,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.rememberMe();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userSecurityService);
-    }
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
+	}
+
 
 }

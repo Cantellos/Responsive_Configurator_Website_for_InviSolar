@@ -104,7 +104,7 @@ public class HomeController {
         return "myAccount";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(
             @ModelAttribute("username") String username,
             @ModelAttribute("password") String password,
@@ -129,7 +129,7 @@ public class HomeController {
         model.addAttribute("userLogged", true);
 
         return "index";
-    }
+    }*/
 
     @RequestMapping(value="/updateUsername", method = RequestMethod.POST)
     public String updateUsername(@ModelAttribute("username") String username,
