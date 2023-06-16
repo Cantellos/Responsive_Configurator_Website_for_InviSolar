@@ -1,14 +1,14 @@
 package com.cantelli.invisolar.controller;
 
-import com.cantelli.invisolar.domain.Profile;
+import com.cantelli.invisolar.domain.House;
 import com.cantelli.invisolar.domain.User;
-import com.cantelli.invisolar.service.ProfileService;
+import com.cantelli.invisolar.service.HouseService;
 import com.cantelli.invisolar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
@@ -19,17 +19,32 @@ public class ProfileController {
     @Autowired
     private UserService userService;
     @Autowired
-    private ProfileService profileService;
+    private HouseService houseService;
 
     @RequestMapping("")
     public String profiling(Model model, Principal principal){
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("user", user);
         model.addAttribute("startingPower", false);
-        return"profiling";
+        return"houseProfile";
     }
 
-    @RequestMapping(value = "/startingPowerForm", method = RequestMethod.POST)
+    @RequestMapping("myHouse")
+    public String myHouse(
+            Model model,
+            Principal principal
+        ){
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        House house = houseService.findByProfileOwner(user);
+        if(house!=null){
+            model.addAttribute("startingPower", house);
+        }
+        model.addAttribute("startingPower", false);
+        return"houseProfile";
+    }
+
+    @RequestMapping(value = "/startProfileForm", method = RequestMethod.POST)
     public String startingPowerForm(
             Model model,
             Principal principal,
@@ -49,33 +64,37 @@ public class ProfileController {
         model.addAttribute("startingPower", true);
         model.addAttribute("startPower", startPower);
         model.addAttribute("user", user);
-        return"profiling";
+        return"houseProfile";
     }
 
-    @RequestMapping(value = "/profilingForm", method = RequestMethod.POST)
+    @RequestMapping(value = "/createProfileForm", method = RequestMethod.POST)
     public String profilingForm(
             Model model,
             Principal principal,
             @ModelAttribute("startPower") int startPower,
             @ModelAttribute("boiler") Boolean boiler,
+            @ModelAttribute("badOrientation") Boolean badOrientation,
             @ModelAttribute("car") Boolean car,
-            @ModelAttribute("km") int km,
-            @ModelAttribute("badOrientation") Boolean badOrientation
-    ){
+            @ModelAttribute("km") int km
+        ){
 
         User user = userService.findByUsername(principal.getName());
-        Profile profile = new Profile();
+        House house = new House();
 
-        profile.setProfileOwner(user);
-        profile.setStartPower(startPower);
-        //...
+        house.setUser(user);
+        house.setStartPower(startPower);
+        house.setBoiler(boiler);
+        house.setBadOrientation(badOrientation);
+        house.setCar(car);
+        if(car){
+            house.setKm(km);
+        } else house.setKm(0);
 
-        profile = profileService.create(profile);
+        house = houseService.create(house);
 
-        model.addAttribute("profile", profile);
+        model.addAttribute("profile", house);
         model.addAttribute("user", user);
 
-        return"profiling";
+        return"myHouse";
     }
-
 }

@@ -15,14 +15,14 @@
 
   <!-- Edit user information -->
   <div class="container mt-4">
-    <div class="container w-75 justify-content-center">
+    <!--<div class="container w-75 justify-content-center">
       <div class="bs rounded-3 mb-1 px-2 py-1 invisolar text-center" th:if="${updatedHouseProfile}">
-        House profile updated.
+        House house updated.
       </div>
-    </div>
+    </div>-->
 
     <div th:if="${startingPower}">
-      <span>Your actual annual power consumption is:</span><span th:text="${startPower}"></span>
+      <span>Your actual annual power consumption is: </span><span th:text="${startPower}"></span> kW
     </div>
 
     <div th:if="${!startingPower}">
@@ -32,7 +32,7 @@
         <button class="btn btn-primary invisolar-button" id="noPower">No</button>
       </div>
 
-      <form class="form" id="noPowerForm" th:action="@{/profiling/startingPowerForm}" method="post" style="display:none;">
+      <form class="form" id="noPowerForm" th:action="@{/profiling/startProfileForm}" method="post" style="display:none;">
         <div class="form-group mt-2">
           <input type="hidden" value="" id="actualPower" name="actualPower"/>
           <label for="numPeople">Insert here the number of people living in the house</label>
@@ -42,7 +42,7 @@
         </div>
       </form>
 
-      <form class="form" id="yesPowerForm" th:action="@{/profiling/startingPowerForm}" method="post" style="display:none;">
+      <form class="form" id="yesPowerForm" th:action="@{/profiling/startProfileForm}" method="post" style="display:none;">
         <div class="form-group mt-2">
           <input type="hidden" value="" id="numPeople" name="numPeople"/>
           <label for="actualPower">Insert here your annual electric consumption (number of kW)</label>
@@ -55,7 +55,7 @@
 
     <div th:if="${startingPower}">
 
-    <form th:action="@{/profiling/profilingForm}" method="post">
+    <form th:action="@{/profiling/createProfileForm}" method="post">
 
       <input type="hidden" th:value="${startPower}" id="startPower" name="startPower">
 
@@ -126,29 +126,29 @@
 <!-- end of Main Container -->
 <script>
   const yesBtn = document.getElementById('yesPower');
+  const yesForm = document.getElementById('yesPowerForm');
+  const noBtn = document.getElementById('noPower');
+  const noForm = document.getElementById('noPowerForm');
 
   yesBtn.addEventListener('click', () => {
-    const form = document.getElementById('yesPowerForm');
-
-    if (form.style.display === 'none') {
+    if (yesForm.style.display === 'none') {
       // 👇️ this SHOWS the form
-      form.style.display = 'block';
+      yesForm.style.display = 'block';
+      noForm.style.display = 'none';
     } else {
       // 👇️ this HIDES the form
-      form.style.display = 'none';
+      yesForm.style.display = 'none';
     }
   });
-  const noBtn = document.getElementById('noPower');
 
   noBtn.addEventListener('click', () => {
-    const form = document.getElementById('noPowerForm');
-
-    if (form.style.display === 'none') {
+    if (noForm.style.display === 'none') {
       // 👇️ this SHOWS the form
-      form.style.display = 'block';
+      noForm.style.display = 'block';
+      yesForm.style.display = 'none';
     } else {
       // 👇️ this HIDES the form
-      form.style.display = 'none';
+      noForm.style.display = 'none';
     }
   });
 </script>

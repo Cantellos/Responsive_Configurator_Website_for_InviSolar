@@ -43,31 +43,6 @@ public class User implements UserDetails{
     public User() {
 
     }
-
-    /*
-    @OneToMany(mappedBy = "user_visits", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<Visit> visits = new HashSet<>();
-
-    @OneToMany(mappedBy = "user_quotes", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<Quote> quotes = new HashSet<>();
-
-    @OneToOne(mappedBy = "user_profile", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Profile profile = new Profile();
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    @JsonIgnore
-    private Collection<Role> roles;
-
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Quote> quotes
-    */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorites = new HashSet<>();
@@ -94,21 +69,6 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return enabled;
-    }
-
-    public User(Long id, String username, String password, String firstName, String lastName, String email, String phone,
-                boolean enabled, Set<UserRole> userRoles, List<Quote> quoteList, List<Visit> visitList) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.enabled = enabled;
-        this.userRoles = userRoles;
-        this.quoteList = quoteList;
-        this.visitList = visitList;
     }
 
     public Long getId() {

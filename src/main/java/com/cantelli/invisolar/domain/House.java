@@ -1,27 +1,24 @@
 package com.cantelli.invisolar.domain;
 
-import com.cantelli.invisolar.domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 
 @Entity
-public class Profile {
-
+public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int numPeople;////////
+    private double power;
     private int startPower;
     private Boolean boiler;
     private Boolean car;
     private int km;
     private Boolean badOrientation;
+
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id", nullable = false, updatable = false)
-    private User profileOwner;
+    private User user;
 
-    public Profile() {
+    public House() {
     }
 
     public long getId() {
@@ -32,12 +29,12 @@ public class Profile {
         this.id = id;
     }
 
-    public int getNumPeople() {
-        return numPeople;
+    public double getPower() {
+        return power;
     }
 
-    public void setNumPeople(int numPeople) {
-        this.numPeople = numPeople;
+    public void setPower(double Power) {
+        this.power = Power;
     }
 
     public int getStartPower() {
@@ -64,11 +61,11 @@ public class Profile {
         this.car = car;
     }
 
-    public long getKm() {
+    public int getKm() {
         return km;
     }
 
-    public void setKm(long km) {
+    public void setKm(int km) {
         this.km = km;
     }
 
@@ -80,11 +77,11 @@ public class Profile {
         this.badOrientation = badOrientation;
     }
 
-    public User getProfileOwner() {
-        return profileOwner;
+    public User getUser() {
+        return user;
     }
 
-    public void setProfileOwner(User profileOwner) {
-        this.profileOwner = profileOwner;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

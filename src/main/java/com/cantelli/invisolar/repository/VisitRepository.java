@@ -1,5 +1,6 @@
 package com.cantelli.invisolar.repository;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.cantelli.invisolar.domain.Visit;
@@ -14,7 +15,9 @@ public interface VisitRepository extends CrudRepository<Visit, Integer> {
 
     List<Visit> findByCity(String city);
 
+    //@Query(value="SELECT '*' FROM visit WHERE  ")
     List<Visit> findByDate(Date date);
+
 
     Visit findById(long id);
 
