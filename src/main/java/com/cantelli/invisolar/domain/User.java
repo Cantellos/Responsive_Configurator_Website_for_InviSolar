@@ -40,9 +40,6 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user")
     private List<Visit> visitList;
 
-    @OneToMany(mappedBy = "user")
-    private List<Profile> profileList;
-
     public User() {
 
     }
@@ -100,7 +97,7 @@ public class User implements UserDetails{
     }
 
     public User(Long id, String username, String password, String firstName, String lastName, String email, String phone,
-                boolean enabled, Set<UserRole> userRoles, List<Quote> quoteList, List<Visit> visitList, List<Profile> profileList) {
+                boolean enabled, Set<UserRole> userRoles, List<Quote> quoteList, List<Visit> visitList) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -112,7 +109,6 @@ public class User implements UserDetails{
         this.userRoles = userRoles;
         this.quoteList = quoteList;
         this.visitList = visitList;
-        this.profileList = profileList;
     }
 
     public Long getId() {
@@ -201,13 +197,6 @@ public class User implements UserDetails{
         this.visitList = visitList;
     }
 
-    public List<Profile> getProfileList() {
-        return profileList;
-    }
-
-    public void setProfileList(List<Profile> profileList) {
-        this.profileList = profileList;
-    }
 }
 
 

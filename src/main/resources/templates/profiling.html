@@ -21,8 +21,8 @@
       </div>
     </div>
 
-    <div th:if="${!startingPower}">
-      <span>Your actual annual power consumption is:</span><span th:value="${profile.startPower}"></span>
+    <div th:if="${startingPower}">
+      <span>Your actual annual power consumption is:</span><span th:text="${startPower}"></span>
     </div>
 
     <div th:if="${!startingPower}">
@@ -32,28 +32,32 @@
         <button class="btn btn-primary invisolar-button" id="noPower">No</button>
       </div>
 
-      <form class="form" id="noPowerForm" th:action="@{/startingpowerForm}" method="post" style="display:none;">
+      <form class="form" id="noPowerForm" th:action="@{/profiling/startingPowerForm}" method="post" style="display:none;">
         <div class="form-group mt-2">
-          <label for="actualPower">Insert here your annual electric consumption (number of kW)</label>
+          <input type="hidden" value="" id="actualPower" name="actualPower"/>
+          <label for="numPeople">Insert here the number of people living in the house</label>
           <input type="number" class="form-control"
-                 id="actualPower" name="actualPower"
-                 th:value="${profile.startPower}"/>
+                 id="numPeople" name="numPeople"/>
+          <button type="submit">Calculate your annual electric consumption</button>
         </div>
       </form>
 
-      <form class="form" id="yesPowerForm" th:action="@{/startingpowerForm}" method="post" style="display:none;">
+      <form class="form" id="yesPowerForm" th:action="@{/profiling/startingPowerForm}" method="post" style="display:none;">
         <div class="form-group mt-2">
-          <label for="numPeople">Insert here the number of people living in the house</label>
+          <input type="hidden" value="" id="numPeople" name="numPeople"/>
+          <label for="actualPower">Insert here your annual electric consumption (number of kW)</label>
           <input type="number" class="form-control"
-                 id="numPeople" name="numPeople"
-                 th:value="${profile.numPeople}"/>
+                 id="actualPower" name="actualPower"/>
+          <button type="submit">Calculate your annual electric consumption</button>
         </div>
       </form>
     </div>
 
-    <form th:action="@{/profilingForm}" method="post">
+    <div th:if="${startingPower}">
 
-      <div class="container justify-content-center">
+    <form th:action="@{/profiling/profilingForm}" method="post">
+
+      <input type="hidden" th:value="${startPower}" id="startPower" name="startPower">
 
         <div class="form-group">
           <h4>In the future, are you going to use an electric boiler for house's heating?</h4>
@@ -82,20 +86,20 @@
         <div class="form-group">
           <h4>How many kilometers do you expect to drive with your electric car each year?</h4>
           <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="kmCheckbox1" value="1000">
-              <label class="form-check-label" for="kmCheckbox1">Less then 15.000</label>
+              <input class="form-input" type="radio" id="kmCheckbox1" value="1000" name="kmCheckbox">
+              <label class="form-label" for="kmCheckbox1">Less then 15.000</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="kmCheckbox2" value="2000">
-              <label class="form-check-label" for="kmCheckbox2">Between 15.000 and 25.000</label>
+              <input class="form-input" type="radio" id="kmCheckbox2" value="2000" name="kmCheckbox">
+              <label class="form-label" for="kmCheckbox2">Between 15.000 and 25.000</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="kmCheckbox3" value="3000">
-              <label class="form-check-label" for="kmCheckbox3">Between 25.000 and 35.000</label>
+              <input class="form-input" type="radio" id="kmCheckbox3" value="3000" name="kmCheckbox">
+              <label class="form-label" for="kmCheckbox3">Between 25.000 and 35.000</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="kmCheckbox4" value="4000">
-              <label class="form-check-label" for="kmCheckbox4">More than 35.0000</label>
+              <input class="form-input" type="radio" id="kmCheckbox4" value="4000" name="kmCheckbox">
+              <label class="form-label" for="kmCheckbox4">More than 35.0000</label>
             </div>
         </div>
 
@@ -111,18 +115,43 @@
           </div>
         </div>
 
-      </div>
-
       <div class="text-center mt-4">
         <button type="submit" class="btn btn-primary invisolar-button"> Calculate your annual electric consumption </button>
       </div>
 
     </form>
-
+    </div>
   </div>
 </div>
 <!-- end of Main Container -->
+<script>
+  const yesBtn = document.getElementById('yesPower');
 
+  yesBtn.addEventListener('click', () => {
+    const form = document.getElementById('yesPowerForm');
+
+    if (form.style.display === 'none') {
+      // 👇️ this SHOWS the form
+      form.style.display = 'block';
+    } else {
+      // 👇️ this HIDES the form
+      form.style.display = 'none';
+    }
+  });
+  const noBtn = document.getElementById('noPower');
+
+  noBtn.addEventListener('click', () => {
+    const form = document.getElementById('noPowerForm');
+
+    if (form.style.display === 'none') {
+      // 👇️ this SHOWS the form
+      form.style.display = 'block';
+    } else {
+      // 👇️ this HIDES the form
+      form.style.display = 'none';
+    }
+  });
+</script>
 <div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
 </body>
 <footer>
