@@ -55,12 +55,19 @@
                 </div>
 
                 <div class="form-group mt-2">
-                    <label for="password">Password</label>
+                    <label for="currentPassword">Password</label>
+                    <span class="error" style="color: red;" th:if="${wrongPassword}">
+                    (This password isn't correct)</span>
+                    <input type="password" class="form-control"
+                       id="currentPassword" name="currentPassword"/>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label for="newPassword">Password</label>
                     <span class="error" style="color: red;" th:if="${passwordTooShort}">
                     (This password is too short, insert a longer one)</span>
-                    <input type="text" class="form-control"
-                       id="password" name="password"
-                       th:value="${user.password}"/>
+                    <input type="password" class="form-control"
+                           id="newPassword" name="newPassword"/>
                 </div>
 
                 <div class="form-group mt-2">
@@ -79,6 +86,7 @@
             <div class="text-center mt-4">
                 <h4> Change your username here </h4>
             </div>
+
 
             <form class="form" id="usernameForm" th:action="@{/updateUsername}" method="post">
                 <div class="form-group">

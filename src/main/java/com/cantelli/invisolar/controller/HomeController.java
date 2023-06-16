@@ -5,6 +5,7 @@ import com.cantelli.invisolar.domain.security.Role;
 import com.cantelli.invisolar.domain.security.UserRole;
 import com.cantelli.invisolar.service.UserService;
 import com.cantelli.invisolar.service.impl.UserSecurityService;
+import com.cantelli.invisolar.utility.SecurityUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -75,7 +76,9 @@ public class HomeController {
         User user = new User();
         user.setUsername(username);
         user.setEmail(userEmail);
-        user.setPassword(password);
+
+        String encryptedPassword = SecurityUtility.passwordEncoder().encode(password);
+        user.setPassword(encryptedPassword);
 
         Role role = new Role();
         role.setRoleId(1);
@@ -153,39 +156,7 @@ public class HomeController {
         return"myProfile";
     }
 
-    @RequestMapping(value="/editUserInfo", method = RequestMethod.POST)
-    public String updateUserInfo(@ModelAttribute("firstName") String firstName,
-                                 @ModelAttribute("lastName") String lastName,
-                                 @ModelAttribute("username") String username,
-                                 @ModelAttribute("email") String userEmail,
-                                 @ModelAttribute("password") String userPassword,
-                                 @ModelAttribute("phone") String userPhone,
-                                 Model model) throws Exception{
 
-        User user = userService.findByUsername(username);
-
-        user.setPhone(userPhone);
-        user.setLastName(lastName);
-        user.setFirstName(firstName);
-
-        if ((userService.findByEmail(userEmail) != null)&&(!(userEmail.equals(user.getEmail())))) {
-            model.addAttribute("emailExists", true);
-        }else{
-            user.setEmail(userEmail);
-        }
-
-        if(userPassword.length()<6){
-            model.addAttribute("passwordTooShort", true);
-        }else{
-            user.setPassword(userPassword);
-        }
-
-        model.addAttribute("updatedUserInfo", true);
-
-        model.addAttribute("user", user);
-
-        return"myProfile";
-    }
 
     @RequestMapping("/forgotPassword")
     public String forgetPassword(
