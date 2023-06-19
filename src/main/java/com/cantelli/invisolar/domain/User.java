@@ -41,8 +41,8 @@ public class User implements UserDetails{
     private List<Visit> visitList;
 
     public User() {
-
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorites = new HashSet<>();

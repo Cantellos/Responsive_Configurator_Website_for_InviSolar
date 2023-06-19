@@ -121,6 +121,18 @@ MyProfile
     justify-content: center;
 }
 /*
+MyHouse
+*/
+.table{
+    font-size: 20px;
+}
+tbody{
+    font-size: 20px;
+}
+td{
+    width: 50%;
+}
+/*
 General
 */
 .invisolar{

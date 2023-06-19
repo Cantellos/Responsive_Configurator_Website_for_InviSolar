@@ -68,7 +68,7 @@ public class HomeController {
             return "myAccount";
         }
 
-        if(password.length()<6){
+        if(password.length()<4){
             model.addAttribute("passwordTooShort", true);
             return "myAccount";
         }
@@ -80,11 +80,12 @@ public class HomeController {
         String encryptedPassword = SecurityUtility.passwordEncoder().encode(password);
         user.setPassword(encryptedPassword);
 
+        Set<UserRole> userRoles = new HashSet<>();
         Role role = new Role();
         role.setRoleId(1);
         role.setName("ROLE_USER");
-        Set<UserRole> userRoles = new HashSet<>();
         userRoles.add(new UserRole(user, role));
+
         userService.createUser(user, userRoles);
 
         UserDetails userDetails = userSecurityService.loadUserByUsername(username);
@@ -105,16 +106,6 @@ public class HomeController {
     public String login(Model model) {
         model.addAttribute("classActiveLogin", true);
         return "myAccount";
-    }
-
-    @RequestMapping("/configurator")
-    public String configurator(){
-        return"configurator";
-    }
-
-    @RequestMapping("/booking")
-    public String booking(){
-        return"booking";
     }
 
     @RequestMapping("/faq")

@@ -38,7 +38,7 @@ public class InviSolarApplication implements CommandLineRunner {
         user1.setEmail("JAdams@gmail.com");
         Set<UserRole> userRoles = new HashSet<>();
         Role role1= new Role();
-        role1.setRoleId(1);
+        role1.setRoleId(0);
         role1.setName("ROLE_USER");
         userRoles.add(new UserRole(user1, role1));
 

@@ -15,7 +15,7 @@ public class House {
     private Boolean badOrientation;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id", nullable = false, updatable = false)
+    @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false, updatable = false)
     private User user;
 
     public House() {
