@@ -21,8 +21,8 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public House findByProfileOwner(User user){
-        return houseRepository.findByProfileOwner(user);
+    public House findByUser(User user){
+        return houseRepository.findByUser(user);
     }
 
     @Override
