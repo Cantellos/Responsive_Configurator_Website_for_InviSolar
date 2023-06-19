@@ -10,25 +10,33 @@
 <div class="container w-50">
 
     <h2 class="section-headline text-center pt-4 mb-2">
-      <span th:text="${#strings.toUpperCase(user.username)}"></span><span class="tab"> - </span>
+      <span th:text="${user.username}"></span><span class="tab"> - </span>
       <span th:text="${user.email}"></span>
     </h2>
       <hr style="alignment: center; border: 1px solid; width: 100%;">
     <h2 class="section-headline text-center my-2">
       <span th:if="${firstTime}">Firstly end your account configuration</span>
-      <span th:if="!${firstTime}">Edit your house information</span>
+      <span th:if="!${firstTime}">Edit your profile</span>
     </h2>
 
         <!-- Edit user information -->
         <div class="container mt-4">
 
             <form th:action="@{/editUserInfo}" method="post">
-                <input type="hidden" name="username" th:value="${username}"/>
 
                 <div class="container w-75 justify-content-center">
                     <div class="bs rounded-3 mb-1 px-2 py-1 invisolar text-center" th:if="${updatedUserInfo}">
                         User information updated.
                     </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label for="username">Username</label>
+                    <span class="error" style="color: red;" th:if="${usernameExists}">
+                        (This username is already used. Choose a different one.)</span>
+                    <input type="text" class="form-control"
+                           id="username" name="username"
+                           th:value="${user.username}"/>
                 </div>
 
                 <div class="form-group mt-2">
@@ -48,7 +56,7 @@
                 <div class="form-group mt-2">
                     <label for="email">Email</label>
                     <span class="error" style="color: red;" th:if="${emailExists}">
-                    (This email it's already used. Choose a different one)</span>
+                        (This email it's already used. Choose a different one)</span>
                     <input type="text" class="form-control"
                        id="email" name="email"
                        th:value="${user.email}"/>
@@ -57,7 +65,7 @@
                 <div class="form-group mt-2">
                     <label for="currentPassword">Password</label>
                     <span class="error" style="color: red;" th:if="${wrongPassword}">
-                    (This password isn't correct)</span>
+                        (This password isn't correct)</span>
                     <input type="password" class="form-control"
                        id="currentPassword" name="currentPassword"/>
                 </div>
@@ -65,7 +73,7 @@
                 <div class="form-group mt-2">
                     <label for="newPassword">Password</label>
                     <span class="error" style="color: red;" th:if="${passwordTooShort}">
-                    (This password is too short, insert a longer one)</span>
+                        (This password is too short, insert a longer one)</span>
                     <input type="password" class="form-control"
                            id="newPassword" name="newPassword"/>
                 </div>
@@ -81,28 +89,6 @@
                     <button type="submit" class="btn btn-primary invisolar-button"> Save changes to your account </button>
                 </div>
 
-            </form>
-
-            <div class="text-center mt-4">
-                <h4> Change your username here </h4>
-            </div>
-
-
-            <form class="form" id="usernameForm" th:action="@{/updateUsername}" method="post">
-                <div class="form-group">
-                    <input type="hidden" name="email" th:value="${email}"/>
-                    <label for="userName">Username</label>
-                    <span class="error" style="color: red;" th:if="${usernameExists}">
-                      This username is already used. Choose a different one.</span>
-                    <input type="text" class="form-control"
-                           id="userName" name="username"
-                           th:value="${user.username}"/>
-                </div>
-                <p style="color: #828282">Enter your username here. Choose it wisely because it must be unique.</p>
-
-                <div class="text-center">
-                    <button id="usernameFormSubmitBtn" type="submit" class="btn btn-primary invisolar-button">Save</button>
-                </div>
             </form>
 
         </div>

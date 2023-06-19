@@ -7,7 +7,7 @@ public interface HouseService {
 
     House findById(long id);
 
-    House findByProfileOwner(User user);
+    House findByUser(User user);
 
     House create (House house);
 

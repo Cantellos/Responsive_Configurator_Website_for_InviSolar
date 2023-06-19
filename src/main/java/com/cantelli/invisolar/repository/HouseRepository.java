@@ -8,6 +8,8 @@ public interface HouseRepository extends CrudRepository<House, Integer> {
 
     House findById(long id);
 
-    House findByProfileOwner(User user);
+    House findByUser(User user);
 
+    //@Query(value = "SELECT c FROM Componente c WHERE c.impianto = :impianto and c.stato ='installato'")
+    //    List<Componente> findComponentiAttivi(@Param("impianto") Impianto impianto);
 }

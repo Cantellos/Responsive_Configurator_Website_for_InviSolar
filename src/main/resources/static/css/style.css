@@ -31,8 +31,8 @@ Navbar
 Carousel
  */
 #title-home{
-    padding-top: 35px;
-    margin-bottom: 18px;
+    padding-top: 30px;
+    margin-bottom: 20px;
     width: 450px;
 }
 #carousel-container{
@@ -48,9 +48,9 @@ Carousel
     height: 3vw;
 }
 .carousel-caption {
-    width: auto;
     text-align: center;
-    top: 75%;
+    width: auto;
+    top: 60% !important;
     bottom: initial;
 }
 .h5{
