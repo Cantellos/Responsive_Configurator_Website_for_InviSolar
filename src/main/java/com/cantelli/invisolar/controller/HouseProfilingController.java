@@ -41,7 +41,7 @@ public class HouseProfilingController {
         return"houseProfile";
     }
 
-    @RequestMapping("myHouse")
+    @RequestMapping("/myHouse")
     public String myHouse(Model model, Principal principal){
 
         User user = userService.findByUsername(principal.getName());
@@ -59,9 +59,10 @@ public class HouseProfilingController {
             Principal principal
     ){
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute("startingPower", false);
 
+        model.addAttribute("startingPower", false);
         model.addAttribute("user", user);
+
         return "houseProfile";
     }
 

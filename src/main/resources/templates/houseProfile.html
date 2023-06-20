@@ -27,7 +27,6 @@
       <h4 class="mb-2"> Do you know your current annual electricity demand (kW) ? </h4>
       <span class="error" style="color: red;" th:if="${nullStartPower}">
                           (Insert a valid number, bigger then zero)</span>
-      <div class="mt-2 mb-2">
         <button class="btn btn-primary invisolar-button mx-4" id="yesPower">Yes</button>
         <button class="btn btn-primary invisolar-button mx-4" id="noPower">No</button>
       </div>
@@ -133,7 +132,7 @@
         </div>
 
         <div class="text-center mt-4">
-          <button type="submit" class="btn btn-primary invisolar-button"> Calculate your annual electric consumption </button>
+          <button type="submit" class="btn btn-primary invisolar-button">Calculate your annual electric consumption</button>
         </div>
 
       </form>

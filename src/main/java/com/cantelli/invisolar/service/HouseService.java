@@ -11,6 +11,6 @@ public interface HouseService {
 
     House create (House house);
 
-    public House save(House house);
+    House save(House house);
 
 }
