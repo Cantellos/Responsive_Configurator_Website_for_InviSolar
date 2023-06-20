@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private RoleRepository roleRepository;
 
-
 	@Override
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
@@ -36,7 +35,6 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	@Transactional
 	public User createUser(User user, Set<UserRole> userRoles){
 		User localUser = userRepository.findByUsername(user.getUsername());
 

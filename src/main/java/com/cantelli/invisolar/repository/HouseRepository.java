@@ -4,7 +4,7 @@ import com.cantelli.invisolar.domain.House;
 import com.cantelli.invisolar.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
-public interface HouseRepository extends CrudRepository<House, Integer> {
+public interface HouseRepository extends CrudRepository<House, Long> {
 
     House findById(long id);
 

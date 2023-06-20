@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-public class User implements UserDetails{
+public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private Long id;
     @Column(nullable = false)
@@ -28,7 +28,7 @@ public class User implements UserDetails{
     @Column(nullable = false)
     private String email;
     private String phone;
-    private boolean enabled=true;
+    private boolean enabled = true;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
@@ -50,16 +50,19 @@ public class User implements UserDetails{
 
         return authorites;
     }
+
     @Override
     public boolean isAccountNonExpired() {
         // TODO Auto-generated method stub
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         // TODO Auto-generated method stub
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         // TODO Auto-generated method stub

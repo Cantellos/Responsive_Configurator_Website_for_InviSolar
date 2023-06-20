@@ -16,8 +16,7 @@ public interface VisitRepository extends CrudRepository<Visit, Integer> {
     List<Visit> findByCity(String city);
 
     //@Query(value="SELECT '*' FROM visit WHERE  ")
-    List<Visit> findByDate(Date date);
-
+    //List<Visit> findByDate(Date date);
 
     Visit findById(long id);
 
