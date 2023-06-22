@@ -55,4 +55,29 @@ public class HouseServiceImpl implements HouseService {
         return houseRepository.save(house);
     }
 
+    @Override
+    public double getDayPower(double power){
+
+        double dailyPower = power/365;
+
+        double dayPower = dailyPower*4/3;
+
+        double hourPower = dayPower/5;
+
+        return (Math.ceil(hourPower));
+
+    }
+
+    @Override
+    public double getNightPower(double power){
+
+        double dailyPower = power/365;
+
+        double nightPower = dailyPower*2/3;
+
+        nightPower=(Math.ceil(nightPower));
+
+        return nightPower;
+    }
+
 }

@@ -9,24 +9,19 @@ public class Quote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long price;
-    private String type;
-    private Boolean cheapBattery;
+    private double price;
+    private Boolean roofSystem;
+    private Boolean clayStyle;
+    private Boolean bestBattery;
     private Boolean funding;
-    private long installments;
+    private double installments;
 
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
-    public Quote(long id, long price, String type, Boolean cheapBattery, Boolean funding, long installments, User user) {
-        this.id = id;
-        this.price = price;
-        this.type = type;
-        this.cheapBattery = cheapBattery;
-        this.funding = funding;
-        this.installments = installments;
-        this.user = user;
+    public Quote() {
+
     }
 
     public long getId() {
@@ -37,28 +32,28 @@ public class Quote {
         this.id = id;
     }
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public String getType() {
-        return type;
+    public Boolean getRoofSystem() {
+        return roofSystem;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRoofSystem(Boolean roofSystem) {
+        this.roofSystem = roofSystem;
     }
 
-    public Boolean getCheapBattery() {
-        return cheapBattery;
+    public Boolean getBestBattery() {
+        return bestBattery;
     }
 
-    public void setCheapBattery(Boolean cheapBattery) {
-        this.cheapBattery = cheapBattery;
+    public void setBestBattery(Boolean bestBattery) {
+        this.bestBattery = bestBattery;
     }
 
     public Boolean getFunding() {
@@ -69,11 +64,11 @@ public class Quote {
         this.funding = funding;
     }
 
-    public long getInstallments() {
+    public double getInstallments() {
         return installments;
     }
 
-    public void setInstallments(long installments) {
+    public void setInstallments(double installments) {
         this.installments = installments;
     }
 
@@ -83,5 +78,13 @@ public class Quote {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Boolean getClayStyle() {
+        return clayStyle;
+    }
+
+    public void setClayStyle(Boolean clayStyle) {
+        this.clayStyle = clayStyle;
     }
 }

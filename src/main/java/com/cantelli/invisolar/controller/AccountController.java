@@ -24,7 +24,7 @@ public class AccountController {
     private UserSecurityService userSecurityService;
 
 
-    @RequestMapping("/myProfile")
+    @RequestMapping(value = "/myProfile", method = RequestMethod.GET)
     public String myProfile(Model model, Principal principal){
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("user", user);
@@ -35,25 +35,67 @@ public class AccountController {
     public String updateUserInfo(
             Principal principal,
             @ModelAttribute("firstName") String firstName,
-         @ModelAttribute("lastName") String lastName,
-         @ModelAttribute("username") String username,
-         @ModelAttribute("email") String userEmail,
-         @ModelAttribute("newPassword") String newPassword,
+            @ModelAttribute("lastName") String lastName,
+            @ModelAttribute("username") String username,
+            @ModelAttribute("email") String userEmail,
+            @ModelAttribute("newPassword") String newPassword,
             @ModelAttribute("currentPassword") String currentPassword,
-         @ModelAttribute("phone") String userPhone,
-                                 Model model) throws Exception{
+            @ModelAttribute("phone") String userPhone,
+            Model model) throws Exception{
 
         User user = userService.findByUsername(principal.getName());
 
-        user.setPhone(userPhone);
-        user.setLastName(lastName);
-        user.setFirstName(firstName);
+        model.addAttribute("updatedUserInfo", false);
 
-        if ((userService.findByEmail(userEmail) != null)&&!user.getEmail().equals(userEmail)) {
-            model.addAttribute("emailExists", true);
-        }else{
-            user.setEmail(userEmail);
+        if((firstName!=null)^(user.getFirstName()!=null)){
+            user.setFirstName(firstName);
+            model.addAttribute("updatedUserInfo", true);
+        }else if((firstName!=null)&&(user.getFirstName()!=null)){
+            if(!user.getFirstName().equals(firstName)) {
+                model.addAttribute("updatedUserInfo", true);
+                user.setFirstName(firstName);
+            }
         }
+
+        if((lastName!=null)^(user.getLastName()!=null)){
+            model.addAttribute("updatedUserInfo", true);
+            user.setLastName(lastName);
+        } else if((lastName!=null)&&(user.getLastName()!=null)){
+            if (!user.getLastName().equals(lastName)) {
+                model.addAttribute("updatedUserInfo", true);
+                user.setLastName(lastName);
+            }
+        }
+
+        if((userPhone!=null)^(user.getPhone()!=null)){
+            model.addAttribute("updatedUserInfo", true);
+            user.setPhone(userPhone);
+        } else if((userPhone!=null)&&(user.getPhone()!=null)) {
+            if (!user.getPhone().equals(userPhone)) {
+                model.addAttribute("updatedUserInfo", true);
+                user.setPhone(userPhone);
+            }
+        }
+
+        if(!(username.isEmpty())&&(user.getUsername()!=null)){
+            if (userService.findByUsername(username) == null) {
+                if(!(username.equals(user.getUsername()))) {
+                    model.addAttribute("updatedUserInfo", true);
+                    user.setUsername(username);
+                }else model.addAttribute("usernameExists", true);
+            }else model.addAttribute("usernameExists", true);
+        } else model.addAttribute("usernameNotNull", true);
+
+
+        if(!(userEmail.isEmpty())&&(user.getEmail()!=null)){
+            if ((userService.findByEmail(userEmail) == null)) {
+                if(!(userEmail.equals(user.getEmail()))) {
+                    model.addAttribute("updatedUserInfo", true);
+                    user.setEmail(userEmail);
+                } else model.addAttribute("emailExists", true);
+            }else model.addAttribute("emailExists", true);
+        } else model.addAttribute("emailNotNull", true);
+
 
         if(!currentPassword.isEmpty()&&!newPassword.isEmpty()){
             BCryptPasswordEncoder passwordEncoder = SecurityUtility.passwordEncoder();
@@ -65,34 +107,11 @@ public class AccountController {
                 model.addAttribute("passwordTooShort", true);
             } else{
                 user.setPassword(passwordEncoder.encode(newPassword));
+                model.addAttribute("updatedUserInfo", true);
             }
         }
 
         userService.save(user);
-
-        model.addAttribute("updatedUserInfo", true);
-
-        model.addAttribute("user", user);
-
-        return"myProfile";
-    }
-
-    @RequestMapping(value="/updateUsername", method = RequestMethod.POST)
-    public String updateUsername(@ModelAttribute("username") String username,
-                                 @ModelAttribute("email") String userEmail,
-                                 Model model) throws Exception{
-
-        model.addAttribute("username", username);
-        model.addAttribute("email", userEmail);
-
-        User user = userService.findByEmail(userEmail);
-
-        if ((userService.findByUsername(username) != null)&&(!(username.equals(user.getUsername())))) {
-            model.addAttribute("usernameExists", true);
-        }else{
-            user.setUsername(username);
-            model.addAttribute("updatedUserInfo", true);
-        }
 
         model.addAttribute("user", user);
 

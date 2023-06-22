@@ -13,8 +13,10 @@ public interface QuoteService {
 
     List<Quote> findByUser(User user);
 
-    Quote create (Quote quote);
+    Quote create (Quote quote, double dayPower, double nightPower);
 
     Quote save(Quote quote);
+
+    double calculateFunding(Quote quote, boolean funding, int numYears);
 
 }

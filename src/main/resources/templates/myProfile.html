@@ -33,7 +33,9 @@
                 <div class="form-group mt-2">
                     <label for="username">Username</label>
                     <span class="error" style="color: red;" th:if="${usernameExists}">
-                        (This username is already used. Choose a different one.)</span>
+                        (This username is already used, or it's the same as the old one)</span>
+                    <span class="error" style="color: red;" th:if="${usernameNotNull}">
+                        (The username filed cannot be empty)</span>
                     <input type="text" class="form-control"
                            id="username" name="username"
                            th:value="${user.username}"/>
@@ -56,7 +58,9 @@
                 <div class="form-group mt-2">
                     <label for="email">Email</label>
                     <span class="error" style="color: red;" th:if="${emailExists}">
-                        (This email it's already used. Choose a different one)</span>
+                        (This email it's already used, or it's the same as the old one)</span>
+                    <span class="error" style="color: red;" th:if="${emailNotNull}">
+                        (The email filed cannot be empty)</span>
                     <input type="text" class="form-control"
                        id="email" name="email"
                        th:value="${user.email}"/>
@@ -73,7 +77,7 @@
                 <div class="form-group mt-2">
                     <label for="newPassword">Password</label>
                     <span class="error" style="color: red;" th:if="${passwordTooShort}">
-                        (This password is too short, insert a longer one)</span>
+                        (This password is too short, or it's the same as the old one)</span>
                     <input type="password" class="form-control"
                            id="newPassword" name="newPassword"/>
                 </div>

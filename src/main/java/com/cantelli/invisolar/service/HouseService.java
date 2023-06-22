@@ -13,4 +13,7 @@ public interface HouseService {
 
     House save(House house);
 
+    double getDayPower(double power);
+
+    double getNightPower(double power);
 }

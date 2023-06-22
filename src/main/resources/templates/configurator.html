@@ -12,52 +12,243 @@
     <h2 class="section-headline pt-4 mb-4">
         <span th:text="${user.username}"></span> - Configurator
     </h2>
-
-    <a th:if="${quotes}!=null" type="button" class="btn btn-primary invisolar-button mb-2" th:href="@{/configurator/myQuotes}">Go to your Quotes</a>
-
-    <h4>Your future annual electricity demand is: <span th:text="${house.power}"/>kW</h4>
-    <a type="button" class="btn btn-primary invisolar-button mt-2" th:href="@{/}">Modify your House Profile</a>
-
     <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
 
-    <!-- Edit user information -->
-    <div class="container mt-4 text-center">
-        <form class="form mt-2" th:action="@{/}" method="post">
+    <div th:if="${!hasHouse}">
+        <div>
+            <h4 class="mt-6"><br>To use the configurator you must first have created your house Profile.</h4>
+            <a type="button" class="btn btn-primary btn-lg invisolar-button my-4" th:href="@{/houseProfiling}">Create it</a>
+        </div>
+        <img src="/image/configError.png" class="img-fluid mb-5 mt-4" alt="Configurator Error" style="width: 750px;">
+    </div>
 
-            <div class="form-group mt-3">
-                <h4 class="mb-2">What type of system do you prefer?</h4>
+    <div th:if="${hasHouse}">
 
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input mx-4" type="radio" name="systemForm" id="tiles" value="true"
-                           onclick="showForm('tilesForm')">
-                    <label class="form-check-label" for="tiles">
-                        <img src="/image/Tiles.jpg" id="tilesImg" style="width: 300px;">Solar Roof</label>
+        <div th:if="${askFunding}">
+            <h4>The total price of your configuration is:</h4>
+            <h4 style="font-size: 32px; color:rgb(11,66,142);">
+                <span style="font-size: 32px; color:rgb(11,66,142);" th:text="${quote.price}"></span>€</h4>
+
+            <div th:if="${hasFunding}" class="mt-4">
+                <div th:if="${yesFunding}" class="mt-4">
+                    <h4>The monthly installments of your financing is:</h4>
+                    <h4 style="font-size: 32px; color:rgb(11,66,142);">
+                        <span style="font-size: 32px; color:rgb(11,66,142);" th:text="${quote.installments}"></span>€/Month</h4>
+
+                    <h4 class="mt-4 mb-3">Calculated on the basis of a
+                        <span style="color:rgb(11,66,142);" th:text="${numYears}"></span>-year financing</h4>
+
+                    <div class="form-group my-2 me-3">
+                        <div class="form-check form-check-inline">
+                            <input class="btn-check" type="radio" id="editFund" name="fund" onclick="showForm('yesFunding'); hideForm('noFunding'); hideForm('saveYesFunding')">
+                            <label class="btn btn-primary invisolar-button" for="editFund">Edit financing setting</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="btn-check" type="radio" id="cancelFund" name="fund" onclick="showForm('noFunding'); hideForm('yesFunding'); hideForm('saveYesFunding')">
+                            <label class="btn btn-primary invisolar-button" for="cancelFund">Cancel financing</label>
+                        </div>
+                    </div>
+
+                    <a type="button" class="btn btn-primary invisolar-button my-2 ms-3" th:href="@{/configurator/myQuotes}"
+                            id="saveYesFunding">Save your configuration</a>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input mx-4" type="radio" name="systemForm" id="panel" value="false"
-                           onclick="hideForm('tilesForm')">
-                    <label class="form-check-label" for="tiles">
-                        <img src="/image/Panel.jpeg" id="panelImg" style="width: 300px;"><br>Solar Panel</label>
+                <div th:if="${!yesFunding}" class="mt-4">
+                    <button class="btn btn-primary invisolar-button my-2 me-3"
+                            onclick="showForm('yesFunding'); hideForm('saveNoFunding')">Are you looking for financing?</button>
+                    <a type="button" class="btn btn-primary invisolar-button my-2 ms-3" th:href="@{/configurator/myQuotes}"
+                            id="saveNoFunding">Save your configuration</a>
                 </div>
             </div>
 
-            <div class="form-group mt-3" id="tilesForm" style="display:none;">
-                <h4 class="mb-2">What style do you prefer for your Solar Roof?</h4>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input mx-4" type="radio" name="styleForm" id="terracotta"
-                           value="true" onclick="showForm('terracottaTiles')"/>
-                    <label class="form-check-label" for="terracotta">Terracotta tiles</label>
-                    <span id="terracottaTiles"></span>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input mx-4" type="radio" name="styleForm" id="black"
-                           value="false" onclick="hideForm('terracottaTiles')">
-                    <label class="form-check-label" for="black">Black tiles</label>
+            <div th:if="${!hasFunding}" class="form-group mt-4" id="askFunding">
+                <h4 class="mb-3">Are you looking for financing? We can provide it</h4>
+                <div class="row w-50 mx-auto mb-2">
+                    <div class="col">
+                        <div class="form-check form-check-inline">
+                            <input class="btn-check" type="radio" name="styleForm" id="yesFund"
+                                   value="false" onclick="showForm('yesFunding'); hideForm('noFunding')">
+                            <label class="btn btn-primary invisolar-button" for="yesFund" style="font-size: 20px;">Yes</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-check form-check-inline">
+                            <input class="btn-check" type="radio" name="styleForm" id="noFund"
+                                   value="true" onclick="showForm('noFunding'); hideForm('yesFunding')"/>
+                            <label class="btn btn-primary invisolar-button" for="noFund">No</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group mt-3">
+            <form class="form" id="noFunding" name="noFunding" th:action="@{/configurator/funding}" method="post" style="display: none;">
+                <input type="hidden" th:value="${quote.id}" id="quoteId" name="quoteId">
+                <input type="hidden" value="false" id="fundingForm" name="fundingForm">
+                <input type="hidden" value="0" id="numYears" name="numYears">
+                <button type="submit" class="btn btn-primary invisolar-button mt-4">Confirm you are not looking for a financing</button>
+            </form>
+
+            <form class="form mt-2" id="yesFunding" name="yesFunding" th:action="@{/configurator/funding}"
+                  method="post" style="display: none;" onsubmit="hideForm('yesFunding')">
+
+                <input type="hidden" th:value="${quote.id}" id="quoteId" name="quoteId">
+                <input type="hidden" value="true" id="fundingForm" name="fundingForm">
+
+                <div class="form-group mt-3" id="fundingYears">
+                    <h4>How many years of financing can we offer you?</h4>
+                    <select class="form-select-lg w-50 mx-auto" aria-label="selectYears" name="numYears" id="numYears" required>
+                        <option selected>Select the number of years</option>
+                        <option value="3">3 years</option>
+                        <option value="4">4 years</option>
+                        <option value="5">5 years</option>
+                        <option value="6">6 years</option>
+                        <option value="7">7 years</option>
+                        <option value="8">8 years</option>
+                        <option value="9">9 years</option>
+                        <option value="10">10 years</option>
+                    </select>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary invisolar-button">Save financing setting</button>
+                </div>
+            </form>
+
+            <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
+        </div>
+
+        <h4>Your future annual electricity demand is:</h4>
+        <h4 style="color:rgb(11,66,142);">
+            <span style="color:rgb(11,66,142);" th:text="${power}"></span> kW</h4>
+
+        <div class="row w-75 mx-auto mt-4">
+            <div class="col">
+                <h4>Peak electrical power:</h4>
+            </div>
+            <div class="col">
+                <h4>Batteries power capacity:</h4>
+            </div>
+        </div>
+        <div class="row w-75 mx-auto mb-3">
+            <div class="col">
+                <h4 style="color:rgb(11,66,142);"><span style="color:rgb(11,66,142);" th:text="${dayPower}"/> kWp</h4>
+                <a type="button" class="btn btn-primary invisolar-button mt-5"
+                   th:href="@{/houseProfiling}">Modify your House Profile</a>
+            </div>
+            <div class="col">
+                <h4 style="color:rgb(11,66,142);"><span style="color:rgb(11,66,142);" th:text="${nightPower}"/> kW</h4>
+                <a th:if="${hasQuotes}" type="button" class="btn btn-primary invisolar-button mt-5"
+                   th:href="@{/configurator/myQuotes}">Go to your Quotes</a>
+            </div>
+        </div>
+
+        <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
+
+        <!-- Edit user information -->
+        <div class="container text-center">
+            <form class="form" th:action="@{/configurator/newQuote}">
+
+                <div class="form-group mt-4">
+                    <h4 class="mb-3 pt-2">What type of system would you prefer?</h4>
+
+                    <div class="row justify-content-evenly mx-auto mb-1">
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input invisolar-check" type="radio" name="systemForm" id="tiles" value="true"
+                                       onclick="showForm('tilesForm')">
+                                <label class="form-check-label" for="tiles">Solar Roof</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input invisolar-check" type="radio" name="systemForm" id="panel" value="false"
+                                       onclick="hideForm('tilesForm')">
+                                <label class="form-check-label" for="panel">Solar Panel</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-evenly mx-auto">
+                        <div class="col w-50">
+                            <label class="form-check-label" for="tiles">
+                                <img class="img-fluid" src="/image/Tiles.jpg" id="tilesImg" style="width: 400px;" alt="Solar roof image"></label>
+                        </div>
+                        <div class="col w-50">
+                            <label class="form-check-label" for="panel">
+                                <img class="img-fluid" src="/image/Panel.jpg" id="panelImg" style="width: 400px;" alt="Solar panel image"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4" id="tilesForm" style="display:none;">
+                    <h4 class="mb-3">What style would you prefer for your Solar Roof?</h4>
+
+                    <div class="row justify-content-evenly mx-auto mb-1">
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input invisolar-check" type="radio" name="styleForm" id="black"
+                                       value="false" onclick="hideForm('terracottaTiles')">
+                                <label class="form-check-label" for="black">Black tiles</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input invisolar-check" type="radio" name="styleForm" id="terracotta"
+                                       value="true" onclick="showForm('terracottaTiles')"/>
+                                <label class="form-check-label" for="terracotta">Terracotta tiles</label>
+                                <span id="terracottaTiles" style="display:none;">
+                                    (In this case InviSolar will contact you<br>to study customized solution)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
+
+                <div class="form-group mt-4">
+                    <h4 class="mb-3 pt-2">Which brand of battery would you prefer?</h4>
+
+                    <div class="row justify-content-evenly mx-auto mb-1">
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input invisolar-check" type="radio" name="batteryForm" id="expensive" value="1300"/>
+                                <label class="form-check-label" for="expensive">Tesla (10 year guarantee)</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input invisolar-check" type="radio" name="batteryForm" id="cheap" value="1000"/>
+                                <label class="form-check-label" for="cheap">Huawei (8 year guarantee)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-evenly mx-auto">
+                        <div class="col w-50">
+                            <label class="form-check-label" for="expensive">
+                                <img class="img-fluid" src="/image/tesla.jpg" id="expensiveImg"  alt="Tesla Battery" style="width: 400px;"></label>
+                        </div>
+                        <div class="col w-50">
+                            <label class="form-check-label" for="cheap">
+                                <img class="img-fluid" src="/image/huawei.png" id="cheapImg" alt="Huawei Battery" style="width: 400px;"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-large btn-primary invisolar-button mt-5">Calculate your quote</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- end of Main Container
+
+ <div class="form-group mt-3">
                 <h4 class="mb-2">Choose the quality (and the cost) of the batteries:</h4>
 
                 <div class="form-check form-check-inline">
@@ -72,16 +263,7 @@
                 </div>
             </div>
 
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary invisolar-button">Calculate your quote</button>
-            </div>
-
-        </form>
-    </div>
-
-</div>
-
-<!-- end of Main Container -->
+-->
 <script>
 
 

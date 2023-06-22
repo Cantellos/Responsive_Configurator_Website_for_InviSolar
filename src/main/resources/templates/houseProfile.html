@@ -10,16 +10,19 @@
 <div class="container w-50 text-center">
 
   <h2 class="section-headline pt-4 mb-4">
-    <span th:text="${user.username}"></span> - Edit House Profile
+    <span th:text="${user.getUsername()}"></span> - Edit House Profile
   </h2>
 
   <a th:if="${house}!=null" type="button" class="btn btn-primary invisolar-button mb-2" th:href="@{/houseProfiling/myHouse}">Go to your House Profile</a>
 
-  <!-- Edit user information -->
+  <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
+
   <div class="container mt-4">
 
     <div th:if="${startingPower}" class="text-center">
-      <h4>Your current annual electricity demand is: <span th:text="${startPower}"></span>kW</h4>
+      <h4>Your current annual electricity demand is:</h4>
+      <h4 style="color:rgb(11,66,142);">
+        <span style="color:rgb(11,66,142);" th:text="${startPower}"></span> kW</h4>
       <a type="button" class="btn btn-primary invisolar-button mt-2" th:href="@{/houseProfiling/modifyStartPower}">Modify it</a>
     </div>
 
@@ -27,8 +30,8 @@
       <h4 class="mb-2"> Do you know your current annual electricity demand (kW) ? </h4>
       <span class="error" style="color: red;" th:if="${nullStartPower}">
                           (Insert a valid number, bigger then zero)</span>
-        <button class="btn btn-primary invisolar-button mx-4" id="yesPower">Yes</button>
-        <button class="btn btn-primary invisolar-button mx-4" id="noPower">No</button>
+        <button class="btn btn-primary invisolar-button mx-4 mt-1" id="yesPower">Yes</button>
+        <button class="btn btn-primary invisolar-button mx-4 mt-1" id="noPower">No</button>
       </div>
     </div>
 
@@ -53,7 +56,9 @@
         </div>
       </form>
     </div>
+
     <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
+
     <div class="text-center">
       <form class="form mt-3" th:action="@{/houseProfiling/createProfileForm}" method="post">
 
@@ -66,41 +71,41 @@
         <div class="form-group mt-3">
           <h4> What direction does your roof face? </h4>
           <div class="form-check form-check-inline">
-            <input class="form-check-input mx-4" type="radio"
-                   name="orientationCheckbox" id="orientationCheckbox1" value="true">
+            <input class="form-check-input mx-4 invisolar-check" type="radio"
+                   name="orientationCheckbox" id="orientationCheckbox1" value="true" required>
             <label class="form-check-label" for="orientationCheckbox1">North or West</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input mx-4" type="radio"
-                   name="orientationCheckbox" id="orientationCheckbox2" value="false">
+            <input class="form-check-input mx-4 invisolar-check" type="radio"
+                   name="orientationCheckbox" id="orientationCheckbox2" value="false" required>
             <label class="form-check-label" for="orientationCheckbox2">South or East</label>
           </div>
         </div>
 
         <div class="form-group mt-4">
-          <h4 class>In the future, are you going to use an electric boiler for house's heating?</h4>
+          <h4 class>In the future, do you plan to use an electric heating for your house?</h4>
           <div class="form-check form-check-inline">
-            <input class="form-check-input mx-4" type="radio"
-                   name="boilerCheckbox" id="boilerCheckbox1" value="true">
+            <input class="form-check-input mx-4 invisolar-check" type="radio"
+                   name="boilerCheckbox" id="boilerCheckbox1" value="true" required>
             <label class="form-check-label" for="boilerCheckbox1">Yes</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input mx-4" type="radio"
-                   name="boilerCheckbox" id="boilerCheckbox2" value="false">
+            <input class="form-check-input mx-4 invisolar-check" type="radio"
+                   name="boilerCheckbox" id="boilerCheckbox2" value="false" required>
             <label class="form-check-label" for="boilerCheckbox2">No</label>
           </div>
         </div>
 
         <div class="form-group mt-3">
-          <h4>In the future, are you going to have an electric car and its domestic charging station?</h4>
+          <h4>In the future, do you plan to have an electric car and its domestic charging station?</h4>
           <div class="form-check form-check-inline">
-            <input class="form-check-input mx-4" type="radio"
-                   name="carCheckbox" id="carCheckbox1" value="true" onclick="showKmForm()">
+            <input class="form-check-input mx-4 invisolar-check" type="radio"
+                   name="carCheckbox" id="carCheckbox1" value="true" onclick="showKmForm()" required>
             <label class="form-check-label" for="carCheckbox1" onclick="showKmForm()">Yes</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input mx-4" type="radio"
-                   name="carCheckbox" id="carCheckbox2" value="false" onclick="hideKmForm()">
+            <input class="form-check-input mx-4 invisolar-check" type="radio"
+                   name="carCheckbox" id="carCheckbox2" value="false" onclick="hideKmForm()" required>
             <label class="form-check-label" for="carCheckbox2" onclick="hideKmForm()">No</label>
           </div>
         </div>
@@ -110,21 +115,21 @@
           <div class="row text-start w-75 mx-auto">
             <div class="col">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="kmCheckbox" id="kmCheckbox1" value="1000">
+                <input class="form-check-input invisolar-check" type="radio" name="kmCheckbox" id="kmCheckbox1" value="1000">
                 <label class="form-label" for="kmCheckbox1">About 10.000 or less</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="kmCheckbox" id="kmCheckbox3" value="3000">
+                <input class="form-check-input invisolar-check" type="radio" name="kmCheckbox" id="kmCheckbox3" value="2000">
                 <label class="form-label" for="kmCheckbox3">About 20.000</label>
               </div>
             </div>
             <div class="col">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="kmCheckbox" id="kmCheckbox2" value="2000">
+                <input class="form-check-input invisolar-check" type="radio" name="kmCheckbox" id="kmCheckbox2" value="3000">
                 <label class="form-label" for="kmCheckbox2">About 30.000</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="kmCheckbox" id="kmCheckbox4" value="4000">
+                <input class="form-check-input invisolar-check" type="radio" name="kmCheckbox" id="kmCheckbox4" value="4000">
                 <label class="form-label" for="kmCheckbox4">About 40.000 or more</label>
               </div>
             </div>
@@ -132,7 +137,7 @@
         </div>
 
         <div class="text-center mt-4">
-          <button type="submit" class="btn btn-primary invisolar-button">Calculate your annual electric consumption</button>
+          <button type="submit" class="btn btn-primary invisolar btn-large" >Calculate your annual electric consumption</button>
         </div>
 
       </form>

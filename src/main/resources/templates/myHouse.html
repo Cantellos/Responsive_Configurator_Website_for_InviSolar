@@ -35,7 +35,7 @@
             <td th:if="${!house.badOrientation}">South or East</td>
         </tr>
         <tr>
-            <th scope="row">Electric boiler</th>
+            <th scope="row">Electric house heating system</th>
             <td th:if="${house.boiler}">Yes</td>
             <td th:if="${!house.boiler}">No</td>
         </tr>
@@ -51,7 +51,8 @@
         </tbody>
     </table>
 
-    <a type="button" class="btn btn-primary btn-lg invisolar-button mt-4" th:href="@{/houseProfiling}">Edit your House Profile</a>
+    <a type="button" class="btn btn-primary btn-lg invisolar-button mt-4 me-4" th:href="@{/houseProfiling}">Edit your House Profile</a>
+    <a type="button" class="btn btn-primary btn-lg invisolar-button mt-4 ms-4" th:href="@{/configurator}">Go to Configurator</a>
 
 </div>
 <!-- end of Main Container -->
