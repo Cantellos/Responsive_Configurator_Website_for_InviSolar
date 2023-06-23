@@ -10,11 +10,12 @@ public class Quote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private double price;
-    private Boolean roofSystem;
-    private Boolean clayStyle;
-    private Boolean bestBattery;
+    private String roofSystem;
+    private String tilesStyle;
+    private String battery;
     private Boolean funding;
     private double installments;
+    private double powerDemand;
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -38,22 +39,6 @@ public class Quote {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public Boolean getRoofSystem() {
-        return roofSystem;
-    }
-
-    public void setRoofSystem(Boolean roofSystem) {
-        this.roofSystem = roofSystem;
-    }
-
-    public Boolean getBestBattery() {
-        return bestBattery;
-    }
-
-    public void setBestBattery(Boolean bestBattery) {
-        this.bestBattery = bestBattery;
     }
 
     public Boolean getFunding() {
@@ -80,11 +65,35 @@ public class Quote {
         this.user = user;
     }
 
-    public Boolean getClayStyle() {
-        return clayStyle;
+    public String getRoofSystem() {
+        return roofSystem;
     }
 
-    public void setClayStyle(Boolean clayStyle) {
-        this.clayStyle = clayStyle;
+    public void setRoofSystem(String roofSystem) {
+        this.roofSystem = roofSystem;
+    }
+
+    public String getTilesStyle() {
+        return tilesStyle;
+    }
+
+    public void setTilesStyle(String tilesStyle) {
+        this.tilesStyle = tilesStyle;
+    }
+
+    public String getBattery() {
+        return battery;
+    }
+
+    public void setBattery(String battery) {
+        this.battery = battery;
+    }
+
+    public double getPowerDemand() {
+        return powerDemand;
+    }
+
+    public void setPowerDemand(double powerDemand) {
+        this.powerDemand = powerDemand;
     }
 }

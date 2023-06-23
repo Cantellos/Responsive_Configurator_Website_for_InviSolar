@@ -37,9 +37,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Quote> quoteList;
 
-    @OneToMany(mappedBy = "user")
-    private List<Visit> visitList;
-
     public User() {
     }
 
@@ -150,14 +147,6 @@ public class User implements UserDetails {
 
     public void setQuoteList(List<Quote> quoteList) {
         this.quoteList = quoteList;
-    }
-
-    public List<Visit> getVisitList() {
-        return visitList;
-    }
-
-    public void setVisitList(List<Visit> visitList) {
-        this.visitList = visitList;
     }
 
 }

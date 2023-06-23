@@ -17,6 +17,8 @@ public interface QuoteService {
 
     Quote save(Quote quote);
 
+    void delete(Quote quote);
+
     double calculateFunding(Quote quote, boolean funding, int numYears);
 
 }

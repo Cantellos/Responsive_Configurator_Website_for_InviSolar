@@ -34,19 +34,18 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    @Transactional
     public Quote create(Quote quote, double dayPower, double nightPower){
 
-        double systemPrice, batteryPrice, price;
+        double systemPrice=0, batteryPrice, price;
 
-        if(quote.getRoofSystem()){
+        if(quote.getRoofSystem().equals("Roof")){
             systemPrice = dayPower*2.5;
-            if(quote.getClayStyle()){
+            if(quote.getTilesStyle().equals("Terracotta")){
                 systemPrice = systemPrice*1.25;
             }
-        } else systemPrice = dayPower*1.5;
+        } else if(quote.getRoofSystem().equals("Panel")) systemPrice = dayPower*1.5;
 
-        if(quote.getBestBattery()){
+        if(quote.getBattery().equals("Tesla")){
             batteryPrice = nightPower*1.3;
         } else batteryPrice = nightPower;
 
@@ -64,6 +63,11 @@ public class QuoteServiceImpl implements QuoteService {
     @Override
     public Quote save(Quote quote) {
         return quoteRepository.save(quote);
+    }
+
+    @Override
+    public void delete(Quote quote){
+        quoteRepository.delete(quote);
     }
 
     @Override

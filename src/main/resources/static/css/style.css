@@ -65,6 +65,12 @@ Footer
 #logo-footer{
     width: 230px;
 }
+.flex-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
 /*
 Login
 */
@@ -152,4 +158,11 @@ General
 }
 .btn-large{
     font-size: 25px;
+}
+.mask-custom {
+    backdrop-filter: blur(1px);
+    background-color: rgba(0,0,0,0.25);
+}
+.dropdown-item{
+    font-size: 18px;
 }

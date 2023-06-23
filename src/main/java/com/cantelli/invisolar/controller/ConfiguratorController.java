@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -60,11 +62,27 @@ public class ConfiguratorController {
         return"configurator";
     }
 
+    @RequestMapping("/myQuotes")
+    public String myQuotes(Model model, Principal principal){
+
+        User user = userService.findByUsername(principal.getName());
+        List<Quote> quotes = quoteService.findByUser(user);
+
+        if(!quotes.isEmpty()){
+            model.addAttribute("quotes", quotes);
+            model.addAttribute("hasQuote", true);
+        } else model.addAttribute("hasQuote", false);
+
+        model.addAttribute("user", user);
+
+        return"myQuotes";
+    }
+
     @RequestMapping("/newQuote")
     public String newQuote(
             Model model,
             Principal principal,
-            @ModelAttribute("systemForm") String system,
+            @ModelAttribute("systemForm") String roofSystem,
             @ModelAttribute("styleForm") String style,
             @ModelAttribute("batteryForm") String battery
             ){
@@ -76,14 +94,15 @@ public class ConfiguratorController {
         double nightPower = houseService.getNightPower(power);
         Quote quote = new Quote();
 
-        Boolean roofSystem = Boolean.parseBoolean(system);
-
         quote.setUser(user);
+        quote.setPowerDemand(power);
         quote.setRoofSystem(roofSystem);
-        if(roofSystem){
-            quote.setClayStyle(Boolean.parseBoolean(style));
-        }
-        quote.setBestBattery(Boolean.parseBoolean(battery));
+
+        if(roofSystem.equals("Roof")){
+            if(style!=null)quote.setTilesStyle(style);
+            else quote.setTilesStyle("Black");
+        } else quote.setTilesStyle("/");
+        quote.setBattery(battery);
 
         quote = quoteService.create(quote, dayPower, nightPower);
 
@@ -145,15 +164,22 @@ public class ConfiguratorController {
         return "configurator";
     }
 
-    @RequestMapping("/myQuotes")
-    public String myHouse(Model model, Principal principal){
-
+    @RequestMapping("/deleteQuote")
+    public String deleteQuote(
+            Model model,
+            Principal principal,
+            @RequestParam("id") String id
+    ){
         User user = userService.findByUsername(principal.getName());
-        House house = houseService.findByUser(user);
 
+        Quote quote = quoteService.findById(Long.parseLong(id));
+
+        quoteService.delete(quote);
+
+        List<Quote> quotes = quoteService.findByUser(user);
         model.addAttribute("user", user);
-        model.addAttribute("house", house);
-
-        return"myQuotes";
+        model.addAttribute("quotes", quotes);
+        return "/myQuotes";
     }
+
 }

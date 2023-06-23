@@ -6,6 +6,7 @@ import com.cantelli.invisolar.service.HouseService;
 import com.cantelli.invisolar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,9 +47,12 @@ public class HouseProfilingController {
 
         User user = userService.findByUsername(principal.getName());
         House house = houseService.findByUser(user);
+        if(house!=null){
+            model.addAttribute("house", house);
+            model.addAttribute("hasHouse", true);
+        } else model.addAttribute("hasHouse", false);
 
         model.addAttribute("user", user);
-        model.addAttribute("house", house);
 
         return"myHouse";
     }
@@ -136,6 +140,7 @@ public class HouseProfilingController {
         house = houseService.create(house);
 
         model.addAttribute("house", house);
+        model.addAttribute("hasHouse", true);
         model.addAttribute("user", user);
 
         return"myHouse";

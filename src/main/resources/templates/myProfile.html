@@ -3,23 +3,23 @@
 <head div th:replace="~{common/header.html :: common-header}"></head>
 
 <body class="body">
-
 <div th:replace="~{common/header :: navbar}"></div>
 
+<div class="flex-wrapper">
 <!-- Main Container -->
-<div class="container w-50">
+    <div class="container w-50">
 
-    <h2 class="section-headline text-center pt-4 mb-2">
-      <span th:text="${user.username}"></span><span class="tab"> - </span>
-      <span th:text="${user.email}"></span>
-    </h2>
-      <hr style="alignment: center; border: 1px solid; width: 100%;">
-    <h2 class="section-headline text-center my-2">
-      <span th:if="${firstTime}">Firstly end your account configuration</span>
-      <span th:if="!${firstTime}">Edit your profile</span>
-    </h2>
+        <h2 class="section-headline text-center pt-4 mb-2">
+          <span th:text="${user.username}"></span><span class="tab"> - </span>
+          <span th:text="${user.email}"></span>
+        </h2>
+          <hr style="alignment: center; border: 1px solid; width: 100%;">
+        <h2 class="section-headline text-center my-2">
+          <span th:if="${firstTime}">Firstly end your account configuration</span>
+          <span th:if="!${firstTime}">Edit your profile</span>
+        </h2>
 
-        <!-- Edit user information -->
+            <!-- Edit user information -->
         <div class="container mt-4">
 
             <form th:action="@{/editUserInfo}" method="post">
@@ -30,6 +30,7 @@
                     </div>
                 </div>
 
+
                 <div class="form-group mt-2">
                     <label for="username">Username</label>
                     <span class="error" style="color: red;" th:if="${usernameExists}">
@@ -38,7 +39,7 @@
                         (The username filed cannot be empty)</span>
                     <input type="text" class="form-control"
                            id="username" name="username"
-                           th:value="${user.username}"/>
+                           th:value="${user.username}" required/>
                 </div>
 
                 <div class="form-group mt-2">
@@ -63,7 +64,7 @@
                         (The email filed cannot be empty)</span>
                     <input type="text" class="form-control"
                        id="email" name="email"
-                       th:value="${user.email}"/>
+                       th:value="${user.email}" required/>
                 </div>
 
                 <div class="form-group mt-2">
@@ -96,12 +97,12 @@
             </form>
 
         </div>
-</div>
+    </div>
 <!-- end of Main Container -->
-
+    <footer>
+        <div th:replace="~{common/footer.html :: footer}"></div>
+    </footer>
+</div>
 <div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
 </body>
-<footer>
-  <div th:replace="~{common/footer.html :: footer}"></div>
-</footer>
 </html>

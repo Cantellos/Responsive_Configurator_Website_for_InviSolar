@@ -10,24 +10,18 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Date date;
+    private String date;
     private int hour;
+    private String state;
     private String city;
+    private String zip;
     private String address;
-    private int civic_number;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false, updatable = false)
     private User user;
 
-    public Visit(long id, Date date, int hour, String city, String address, int civic_number, User user) {
-        this.id = id;
-        this.date = date;
-        this.hour = hour;
-        this.city = city;
-        this.address = address;
-        this.civic_number = civic_number;
-        this.user = user;
+    public Visit() {
     }
 
     public long getId() {
@@ -38,11 +32,11 @@ public class Visit {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -54,6 +48,14 @@ public class Visit {
         this.hour = hour;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     public String getCity() {
         return city;
     }
@@ -62,20 +64,20 @@ public class Visit {
         this.city = city;
     }
 
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public int getCivic_number() {
-        return civic_number;
-    }
-
-    public void setCivic_number(int civic_number) {
-        this.civic_number = civic_number;
     }
 
     public User getUser() {

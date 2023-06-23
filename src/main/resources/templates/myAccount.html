@@ -39,19 +39,17 @@
                       <label for="newUsername"> Username: </label>
                       <span class="error" style="color: red;" th:if="${usernameExists}">
                         (This username is already used. Choose a different one)</span>
-                      <input required="required" type="text"
-                             class="form-control"
-                             id="newUsername" name="username" />
+                      <input type="text" class="form-control"
+                             id="newUsername" name="username" required/>
                     </div>
-                    <p style="color: #828282">Enter your username here. Choose it wisely because it must be unique.</p>
+                    <p style="color: #828282">Enter your username here. Choose it wisely because you can't change it in the future.</p>
 
                     <div class="form-group">
                       <label for="newEmail"> Email Address: </label>
                       <span class="error" style="color: red;" th:if="${emailExists}">
                         (This email it's already used. Choose a different one)</span>
-                      <input required="required" type="text"
-                             class="form-control"
-                             id="newEmail" name="email" />
+                      <input type="text" class="form-control"
+                             id="newEmail" name="email" required/>
                     </div>
                     <p style="color: #828282">Enter a valid email address here.</p>
 
@@ -59,9 +57,8 @@
                       <label for="newPassword"> Password: </label>
                       <span class="error" style="color: red;" th:if="${passwordTooShort}">
                         (This password is too short, insert a longer one)</span>
-                      <input required="required" type="text"
-                             class="form-control"
-                             id="newPassword" name="password" />
+                      <input type="text" class="form-control"
+                             id="newPassword" name="password" required/>
                     </div>
                     <p style="color: #828282">Enter your password here. It must be at least 6 characters long.</p>
 
@@ -82,17 +79,15 @@
 
                     <div class="form-group">
                       <label for="username"> Username: </label>
-                      <input required="required" type="text"
-                             class="form-control"
-                            id="username" name="username" />
+                      <input type="text" class="form-control"
+                            id="username" name="username" required/>
                     </div>
                     <p style="color: #828282">Enter your username here.</p>
 
                     <div class="form-group">
-                      <label for="password"> Password: </label> <input
-                            required="required" type="password"
-                            class="form-control"
-                            id="password" name="password" />
+                      <label for="password"> Password: </label>
+                      <input type="password" class="form-control"
+                            id="password" name="password" required/>
                     </div>
                     <p style="color: #828282">Enter the password for your username</p>
                   <!--
@@ -117,7 +112,6 @@
               </div>
             </div>
           </div>
-
           <!-- Forgot Password
           <div class="tab-pane fade" id="tab-3" th:classappend="${classActiveForgetPassword}? 'active show'">
             <div class="panel-group">
@@ -138,58 +132,14 @@
                 </div>
               </div>
             </div>
-            -->
-          </div>
-
+           </div>
+           -->
           <p class="mt-2 mb-3 text-muted">&copy; 2023</p>
         </div>
       </div>
     </div>
   </div>
-  <!-- <form action="/static" id="signin_form" th:classappend="${classActiveSignin}? 'in active'">
-          <div class="container">
-            <img src="/image/logo.png" class="form-logo" alt="InviSolar Logo">
-            <h1 class="h3 mb-3 fw-normal">Sign in</h1>
-            <div class="form-floating">
-              <input type="email" class="form-control mt-2 autofocus floatingInput" placeholder="name@example.com">
-              <label class="floatingInput">Email address</label>
-            </div>
-            <div class="form-floating">
-              <input type="password" class="form-control mt-2 floatingPassword" placeholder="Password">
-              <label class="floatingPassword">Password</label>
-            </div>
-            <a class="btn btn-link mt-2 toLogin" th:href="@{/login}">
-              Already have an account? Login instead
-            </a>
-          </div>
-          <button class="maintheme btn btn-lg btn-primary mt-3" type="submit">
-            Sign in
-          </button>
-          <p class="mt-2 mb-3 text-muted">&copy; 2023</p>
-        </form>
-
-        <form action="#" id="forgotpassword_form" th:classappend="${classActiveForgotPassword}? 'in active'">
-          <div class="container">
-            <img src="/image/logo.png" class="form-logo" alt="InviSolar Logo">
-            <h1 class="h3 mb-3 fw-normal">Insert the email associated with your account</h1>
-            <div class="form-floating">
-              <input type="email" class="form-control mt-2 autofocus floatingInput" placeholder="name@example.com">
-              <label class="floatingInput">Email address</label>
-            </div>
-            <a class="btn btn-link mt-2 toLogin" th:href="@{/login}">
-              Already have an account? Login instead
-            </a>
-            <a class="btn btn-link toSignin" th:href="@{/signin}">
-              Don't have an account? Sign in instead
-            </a>
-          </div>
-          <button class="maintheme btn btn-lg btn-primary mt-4" type="submit">
-            Send mail to reset password
-          </button>
-          <p class="mt-2 mb-3 text-muted">&copy; 2023</p>
-        </form> -->
 </main>
-
-<div th:replace="~{common/header :: body-bottom-scripts}" />
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
 </body>
 </html>

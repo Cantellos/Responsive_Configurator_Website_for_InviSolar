@@ -5,6 +5,10 @@ import com.cantelli.invisolar.service.UserService;
 import com.cantelli.invisolar.service.impl.UserSecurityService;
 import com.cantelli.invisolar.utility.SecurityUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +27,7 @@ public class AccountController {
     @Autowired
     private UserSecurityService userSecurityService;
 
-
-    @RequestMapping(value = "/myProfile", method = RequestMethod.GET)
+    @RequestMapping(value = "/myProfile")
     public String myProfile(Model model, Principal principal){
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("user", user);
@@ -83,7 +86,10 @@ public class AccountController {
                     model.addAttribute("updatedUserInfo", true);
                     user.setUsername(username);
                 }else model.addAttribute("usernameExists", true);
-            }else model.addAttribute("usernameExists", true);
+            }else {
+                user.setUsername(username);
+                model.addAttribute("usernameExists", true);
+            }
         } else model.addAttribute("usernameNotNull", true);
 
 
@@ -103,7 +109,7 @@ public class AccountController {
 
             if(!passwordEncoder.matches(currentPassword, dbPassword)){
                 model.addAttribute("wrongPassword", true);
-            } else if(newPassword.length()<6){
+            } else if(newPassword.length()<4){
                 model.addAttribute("passwordTooShort", true);
             } else{
                 user.setPassword(passwordEncoder.encode(newPassword));
@@ -111,7 +117,14 @@ public class AccountController {
             }
         }
 
-        userService.save(user);
+        user = userService.save(user);
+
+        UserDetails userDetails = userSecurityService.loadUserByUsername(username);
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
+                userDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         model.addAttribute("user", user);
 

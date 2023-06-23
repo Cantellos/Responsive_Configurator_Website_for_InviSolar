@@ -6,60 +6,58 @@
 
 <div th:replace="~{common/header :: navbar}"></div>
 
+<div class="flex-wrapper">
 <!-- Main Container -->
-<div class="container w-50 text-center">
+  <div class="container w-50 text-center">
 
-  <h2 class="section-headline pt-4 mb-4">
-    <span th:text="${user.getUsername()}"></span> - Edit House Profile
-  </h2>
+    <h2 class="section-headline pt-4 mb-4">
+      <span th:text="${user.getUsername()}"></span> - Edit House Profile
+    </h2>
 
-  <a th:if="${house}!=null" type="button" class="btn btn-primary invisolar-button mb-2" th:href="@{/houseProfiling/myHouse}">Go to your House Profile</a>
+    <a th:if="${house}!=null" type="button" class="btn btn-primary invisolar-button mb-2" th:href="@{/houseProfiling/myHouse}">Go to your House Profile</a>
 
-  <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
+    <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
 
-  <div class="container mt-4">
+    <div class="container mt-4">
 
-    <div th:if="${startingPower}" class="text-center">
+      <div th:if="${!startingPower}" class="text-center pt-2">
+        <h4 class="mb-2"> Do you know your current annual electricity demand (kW) ? </h4>
+        <span class="error" style="color: red;" th:if="${nullStartPower}">
+                            (Insert a valid number, bigger then zero)</span>
+        <button class="btn btn-primary invisolar-button mx-4 mt-1" id="yesPower">Yes</button>
+        <button class="btn btn-primary invisolar-button mx-4 mt-1" id="noPower">No</button>
+
+        <div class="text-center">
+          <form class="form mt-2" id="yesPowerForm" th:action="@{/houseProfiling/startProfileForm}" method="post" style="display:none;">
+            <div class="form-group mt-2">
+              <input type="hidden" value="0" id="numPeople" name="numPeople"/>
+              <label for="actualPower">Insert here your current annual electricity demand</label>
+              <input type="number" class="form-control w-50 mx-auto" min="0" value="0"
+                     id="actualPower" name="actualPower" placeholder="Number of kW"/>
+              <button type="submit" class="btn btn-primary invisolar-button mt-2">Save</button>
+            </div>
+          </form>
+
+          <form class="form mt-2" id="noPowerForm" th:action="@{/houseProfiling/startProfileForm}" method="post" style="display:none;">
+            <div class="form-group mt-2">
+              <input type="hidden" value="0" id="actualPower" name="actualPower"/>
+              <label for="numPeople">Insert here the number of people living in the house</label>
+              <input type="number" class="form-control w-50 mx-auto" min="0" value="0"
+                     id="numPeople" name="numPeople" placeholder="Min. 1"/>
+              <button type="submit" class="btn btn-primary invisolar-button mt-2">Estimate your current annual electricity demand</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div th:if="${startingPower}" class="text-center">
+
       <h4>Your current annual electricity demand is:</h4>
       <h4 style="color:rgb(11,66,142);">
         <span style="color:rgb(11,66,142);" th:text="${startPower}"></span> kW</h4>
       <a type="button" class="btn btn-primary invisolar-button mt-2" th:href="@{/houseProfiling/modifyStartPower}">Modify it</a>
-    </div>
+      <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
 
-    <div th:if="${!startingPower}" class="text-center">
-      <h4 class="mb-2"> Do you know your current annual electricity demand (kW) ? </h4>
-      <span class="error" style="color: red;" th:if="${nullStartPower}">
-                          (Insert a valid number, bigger then zero)</span>
-        <button class="btn btn-primary invisolar-button mx-4 mt-1" id="yesPower">Yes</button>
-        <button class="btn btn-primary invisolar-button mx-4 mt-1" id="noPower">No</button>
-      </div>
-    </div>
-
-    <div class="text-center">
-      <form class="form mt-2" id="yesPowerForm" th:action="@{/houseProfiling/startProfileForm}" method="post" style="display:none;">
-        <div class="form-group mt-2">
-          <input type="hidden" value="0" id="numPeople" name="numPeople"/>
-          <label for="actualPower">Insert here your current annual electricity demand</label>
-          <input type="number" class="form-control w-50 mx-auto" min="0" value="0"
-                 id="actualPower" name="actualPower" placeholder="Number of kW"/>
-          <button type="submit" class="btn btn-primary invisolar-button mt-2">Save</button>
-        </div>
-      </form>
-
-      <form class="form mt-2" id="noPowerForm" th:action="@{/houseProfiling/startProfileForm}" method="post" style="display:none;">
-        <div class="form-group mt-2">
-          <input type="hidden" value="0" id="actualPower" name="actualPower"/>
-          <label for="numPeople">Insert here the number of people living in the house</label>
-          <input type="number" class="form-control w-50 mx-auto" min="0" value="0"
-                 id="numPeople" name="numPeople" placeholder="Min. 1"/>
-          <button type="submit" class="btn btn-primary invisolar-button mt-2">Estimate your current annual electricity demand</button>
-        </div>
-      </form>
-    </div>
-
-    <hr style="alignment: center; border: 1px solid black; width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;">
-
-    <div class="text-center">
       <form class="form mt-3" th:action="@{/houseProfiling/createProfileForm}" method="post">
 
         <span class="error" style="color: red;" th:if="${missingStartPower}">
@@ -140,49 +138,16 @@
           <button type="submit" class="btn btn-primary invisolar btn-large" >Calculate your annual electric consumption</button>
         </div>
 
-      </form>
+        </form>
+      </div>
+
     </div>
   </div>
-</div>
 <!-- end of Main Container -->
-<script>
-
-  function showKmForm (){
-    const kmForm = document.getElementById('kmForm');
-    kmForm.style.display = 'block';
-  }
-
-  function hideKmForm (){
-    const kmForm = document.getElementById('kmForm');
-    kmForm.style.display = 'none';
-  }
-
-  const yesBtn = document.getElementById('yesPower');
-  const yesForm = document.getElementById('yesPowerForm');
-  const noBtn = document.getElementById('noPower');
-  const noForm = document.getElementById('noPowerForm');
-
-  yesBtn.addEventListener('click', () => {
-    if (yesForm.style.display === 'none') {
-      // 👇️ this SHOWS the form
-      yesForm.style.display = 'block';
-      noForm.style.display = 'none';
-
-    }
-  });
-
-  noBtn.addEventListener('click', () => {
-    if (noForm.style.display === 'none') {
-      // 👇️ this SHOWS the form
-      noForm.style.display = 'block';
-      yesForm.style.display = 'none';
-    }
-  });
-
-</script>
-<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
-</body>
 <footer>
   <div th:replace="~{common/footer.html :: footer}"></div>
 </footer>
+</div>
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
+</body>
 </html>

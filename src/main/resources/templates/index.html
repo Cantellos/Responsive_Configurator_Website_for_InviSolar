@@ -3,9 +3,8 @@
 <head div th:replace="~{common/header.html :: common-header}"></head>
 
 <body class="body">
-
-    <div th:replace="~{common/header :: navbar}"></div>
-
+<div th:replace="~{common/header :: navbar}"></div>
+<div class="flex-wrapper">
     <!-- Main Container -->
     <div class="container w-75" id="carousel-container">
 
@@ -61,10 +60,10 @@
         <!-- end of Carousel -->
     </div>
     <!-- end of Main Container -->
-
-    <div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
+    <footer>
+        <div th:replace="~{common/footer.html :: footer}"></div>
+    </footer>
+</div>
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
 </body>
-<footer>
-    <div th:replace="~{common/footer.html :: footer}"></div>
-</footer>
 </html>

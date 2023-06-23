@@ -26,7 +26,6 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    @Transactional
     public House create(House house){
 
         double power = house.getStartPower();
