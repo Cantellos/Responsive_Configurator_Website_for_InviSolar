@@ -42,6 +42,8 @@ public class HouseProfilingController {
         return"houseProfile";
     }
 
+
+
     @RequestMapping("/myHouse")
     public String myHouse(Model model, Principal principal){
 
