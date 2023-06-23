@@ -1,5 +1,5 @@
 .body{
-    margin-top: 153px;
+    margin-top: 127px;
 }
 /*
 Navbar
@@ -7,12 +7,12 @@ Navbar
 #logo{
     transform: translateY(0.5px);
     margin-left: 30px;
-    width: 400px;
+    width: 315px;
 }
 .nav-item{
     margin-left: 15px;
     margin-right: 15px;
-    font-size: 26px;
+    font-size: 23px;
 }
 .nav-link{
     color: white;
@@ -20,7 +20,7 @@ Navbar
 .btn-outline-light{
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 25px;
+    font-size: 23px;
 }
 
 #loginBtn, #logoutBtn{
@@ -31,15 +31,15 @@ Navbar
 Carousel
  */
 #title-home{
-    padding-top: 35px;
-    margin-bottom: 18px;
+    padding-top: 30px;
+    margin-bottom: 20px;
     width: 450px;
 }
 #carousel-container{
     text-align: center;
 }
 #carousel-indicator1, #carousel-indicator2, #carousel-indicator3 {
-    width: 8vw;
+    width: 7vw;
     height: 0.4vw;
     margin-left: 0.5vw;
 }
@@ -48,9 +48,9 @@ Carousel
     height: 3vw;
 }
 .carousel-caption {
-    width: auto;
     text-align: center;
-    top: 70%;
+    width: auto;
+    top: 60% !important;
     bottom: initial;
 }
 .h5{
@@ -64,6 +64,12 @@ Footer
 }
 #logo-footer{
     width: 230px;
+}
+.flex-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
 }
 /*
 Login
@@ -80,7 +86,7 @@ Login
     border-color: rgb(11,66,142);
 }
 .form-logo{
-    max-width: 90%; height: auto;
+    max-width: 85%; height: auto;
 }
 #video {
     position:fixed;
@@ -100,15 +106,63 @@ Login
     color: rgb(11,66,142);
     font-size: 20px;
 }
-.login-button{
+.invisolar-button{
     font-size: 20px;
     background-color: rgb(11,66,142);
     border-color: rgb(11,66,142);
 }
-
+/*
+MyProfile
+*/
 .panel-body{
     margin: 15px 15px 0px 15px;
 }
 .form-group{
     font-size: 20px;
+}
+.form-control{
+    margin-top: 5px;
+}
+.error{
+    justify-content: center;
+}
+/*
+MyHouse
+*/
+.table{
+    font-size: 20px;
+}
+tbody{
+    font-size: 20px;
+}
+td{
+    width: 50%;
+}
+/*
+General
+*/
+.invisolar{
+    color: white;
+    background-color: rgb(11,66,142);
+    border-color: rgb(11,66,142);
+}
+.invisolar-check:checked{
+    color: white;
+    background-color: rgb(11,66,142);
+    border-color: rgb(11,66,142);
+}
+.p{
+    font-size:10px;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+.btn-large{
+    font-size: 25px;
+}
+.mask-custom {
+    backdrop-filter: blur(1px);
+    background-color: rgba(0,0,0,0.25);
+}
+.dropdown-item{
+    font-size: 18px;
 }

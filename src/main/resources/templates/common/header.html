@@ -16,13 +16,12 @@
     <link rel="stylesheet" href="/css/non-responsive.css"/>
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
-
 </head>
 
 <body>
 
     <div th:fragment="navbar">
-        <nav class="navbar navbar-expand-xxl navbar-dark bg-dark fixed-top">
+        <nav class="navbar nav-fill navbar-expand-xxl navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
                     <img id="logo" src="/image/logo.png" alt="InviSolar Logo">
@@ -35,43 +34,71 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/configurator">Configurator</a>
+                        <li class="nav-item dropdown-center" sec:authorize="isAuthenticated()">
+                                <button class="btn btn-dark dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                    House Profile
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li><a class="dropdown-item" th:href="@{/houseProfiling}">House Profiling</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/houseProfiling/myHouse}">My House</a></li>
+                                    <li><hr class="dropdown-divider" sec:authorize="hasRole('ROLE_ADMIN')"></li>
+                                    <li><a class="dropdown-item" th:href="@{/houseProfile/manageHouses}" sec:authorize="hasRole('ROLE_ADMIN')">Manage Houses</a></li>
+                                </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/booking">Book a visit</a>
+                        <li class="nav-item dropdown-center" sec:authorize="isAuthenticated()">
+                            <button class="btn btn-dark dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                Configurator
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" th:href="@{/configurator}">Quote configuration</a></li>
+                                <li><a class="dropdown-item" th:href="@{/configurator/myQuotes}">My Quotes</a></li>
+                                <li><hr class="dropdown-divider" sec:authorize="hasRole('ROLE_ADMIN')"></li>
+                                <li><a class="dropdown-item" th:href="@{/configurator/manageQuotes}" sec:authorize="hasRole('ROLE_ADMIN')">Manage Quotes</a></li>
+                            </ul>
                         </li>
+                        <li class="nav-item dropdown-center" sec:authorize="isAuthenticated()">
+                            <button class="btn btn-dark dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                Home Visit
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" th:href="@{/visitBooking}">Book a visit</a></li>
+                                <li><a class="dropdown-item" th:href="@{/visitBooking/myVisit}">My Visit</a></li>
+                                <li><hr class="dropdown-divider" sec:authorize="hasRole('ROLE_ADMIN')"></li>
+                                <li><a class="dropdown-item" th:href="@{/visitBooking/manageVisits}" sec:authorize="hasRole('ROLE_ADMIN')">Manage Visits</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <a class="nav-link" href="/login">House Profile</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <a class="nav-link" href="/login">Configurator</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <a class="nav-link" href="/login">Home Visit</a>
+                        </li>
+                        <!--
                         <li class="nav-item">
                             <a class="nav-link" href="/faq">FAQ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/about">About</a>
                         </li>
+                        -->
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <div sec:authorize="!isAuthenticated()">
-                            <li class="nav-item">
-                                <a class="btn btn-outline-light" id="loginBtn" href="/login">Login</a>
-                            </li>
-                        </div>
-                        <div sec:authorize="isAuthenticated()">
-                            <li class="nav-item">
-                                <a class="btn btn-outline-light" id="myProfileBtn" href="/myProfile">My Account</a>
-                            </li>
-                        </div>
-                        <div sec:authorize="isAuthenticated()">
-                            <li class="nav-item">
-                                <a class="btn btn-outline-light" id="logoutBtn" href="/logout">Logout</a>
-                            </li>
-                        </div>
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <a class="btn btn-outline-light me-1" id="loginBtn" th:href="@{/login}">Login</a>
+                        </li>
 
-                        <!-- <div sec:authorize="isAnonymous()">
-                            <li class="nav-item"><a class="btn btn-outline-light" id="loginBtn"  sec:authorize="isAnonymous()" th:href="@{/login}"  style="margin-right: 30px;">Login</a></li>
-                        </div>
-                        <div sec:authorize="isAuthenticated()">
-                            <li class="nav-item"><a class="btn btn-outline-light" sec:authorize="isAuthenticated()" th:href="@{/myProfile}">My Account</a></li>
-                            <li class="nav-item"><a class="btn btn-outline-light" sec:authorized="isAuthenticated()" th:href="@{/logout}" style="margin-right: 30px;"> Logout </a></li>
-                        </div> -->
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <a class="btn btn-outline-light" id="signinBtn" th:href="@{/signin}">Sign up</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="btn btn-outline-light" id="myProfileBtn" th:href="@{/myProfile}">My Account</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="btn btn-outline-light me-1" id="logoutBtn" th:href="@{/logout}">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -79,6 +106,51 @@
     </div>
 
     <div th:fragment="body-bottom-scripts">
+        <script>function showForm(formName){
+        const tilesForm = document.getElementById(formName);
+        tilesForm.style.display = 'block';
+        }
+
+        function hideForm (formName){
+        const tilesForm = document.getElementById(formName);
+        tilesForm.style.display = 'none';
+        }
+        </script>
+        <script>
+
+            function showKmForm (){
+                const kmForm = document.getElementById('kmForm');
+                kmForm.style.display = 'block';
+            }
+
+            function hideKmForm (){
+                const kmForm = document.getElementById('kmForm');
+                kmForm.style.display = 'none';
+            }
+
+            const yesBtn = document.getElementById('yesPower');
+            const yesForm = document.getElementById('yesPowerForm');
+            const noBtn = document.getElementById('noPower');
+            const noForm = document.getElementById('noPowerForm');
+
+            yesBtn.addEventListener('click', () => {
+                if (yesForm.style.display === 'none') {
+                    // 👇️ this SHOWS the form
+                    yesForm.style.display = 'block';
+                    noForm.style.display = 'none';
+
+                }
+            });
+
+            noBtn.addEventListener('click', () => {
+                if (noForm.style.display === 'none') {
+                    // 👇️ this SHOWS the form
+                    noForm.style.display = 'block';
+                    yesForm.style.display = 'none';
+                }
+            });
+
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
     </div>

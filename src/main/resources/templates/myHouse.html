@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head div th:replace="~{common/header.html :: common-header}"></head>
+
+<body class="body">
+<div th:replace="~{common/header :: navbar}"></div>
+
+<div class="flex-wrapper">
+<!-- Main Container -->
+    <div class="container text-center">
+
+        <h2 class="section-headline text-center pt-4 mb-4">
+            <span th:text="${user.username}"/>'s House Profile
+        </h2>
+        <hr style="alignment: center; border: 1px solid; width: 100%;">
+
+        <div th:if="${!hasHouse}">
+            <h4 class="mt-6"><br>You have no house profile yet. Create one clicking the button below.</h4>
+            <a type="button" class="btn btn-primary btn-lg invisolar-button my-4" th:href="@{/houseProfiling}">Go to House Profiling</a>
+        </div>
+
+        <div th:if="${hasHouse}">
+            <h2 class="section-headline text-center pt-2 my-4">
+                Your future annual electricity demand is:  <span th:text="${house.power}"/> kW
+            </h2>
+
+            <table class="table table-hover table-fixed mt-5">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Options Name</th>
+                    <th scope="col">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">Current annual electricity demand</th>
+                    <td><span th:text="${house.startPower}"/> kW</td>
+                </tr>
+                <tr>
+                    <th scope="row">Roof Orientation</th>
+                    <td th:if="${house.badOrientation}">North or West</td>
+                    <td th:if="${!house.badOrientation}">South or East</td>
+                </tr>
+                <tr>
+                    <th scope="row">Electric house heating system</th>
+                    <td th:if="${house.boiler}">Yes</td>
+                    <td th:if="${!house.boiler}">No</td>
+                </tr>
+                <tr>
+                    <th scope="row">Electric car</th>
+                    <td th:if="${house.car}">Yes</td>
+                    <td th:if="${!house.car}">No</td>
+                </tr>
+                <tr th:if="${house.car}">
+                    <th scope="row">Estimated kilometers traveled each year by car</th>
+                    <td><span th:text="${house.km}*10"/> Km</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <a type="button" class="btn btn-primary btn-lg invisolar-button mt-4 me-4" th:href="@{/houseProfiling}">Edit your House Profile</a>
+            <a type="button" class="btn btn-primary btn-lg invisolar-button mt-4 ms-4" th:href="@{/configurator}">Go to Configurator</a>
+        </div>
+    </div>
+<!-- end of Main Container -->
+    <footer>
+        <div th:replace="~{common/footer.html :: footer}"></div>
+    </footer>
+</div>
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
+</body>
+</html>

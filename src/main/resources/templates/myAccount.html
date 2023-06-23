@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/header.html :: common-header}"></head>
+
+<body class="body text-center">
+
+<video autoplay loop muted id="video">
+  <source src="/video/video-login.mp4" type="video/mp4">
+</video>
+
+<main class="form">
+  <div class="container">
+    <div class="row row-cols-sm-3">
+      <div class="col-1 col-sm-3"></div>
+      <div class="col-10 col-sm-6" id="form-container">
+        <img src="/image/logo.png" class="form-logo" alt="InviSolar Logo">
+
+        <ul class="nav nav-underline nav-justified">
+          <li class="nav-item login">
+            <a class="nav-link login" href="#tab-1" data-bs-toggle="tab" aria-current="page" th:classappend="${classActiveNewAccount}? 'active'">Sign up</a>
+          </li>
+          <li class="nav-item login">
+            <a class="nav-link login" href="#tab-2" data-bs-toggle="tab" aria-current="page" th:classappend="${classActiveLogin}? 'active'">Log in</a>
+          </li>
+          <!-- <li class="nav-item login">
+            <a class="nav-link login" href="#tab-3" data-bs-toggle="tab" aria-current="page" th:classappend="${classActiveForgetPassword}? 'active'">Forget Password</a>
+          </li> -->
+        </ul>
+
+        <div class="tab-content mb-2">
+
+          <!-- Sign up -->
+          <div class="tab-pane fade" id="tab-1" th:classappend="${classActiveNewAccount}? 'active show'">
+            <div class="panel-group">
+              <div class="panel panel-default" style="border: none;">
+                <div class="panel-body">
+                  <form th:action="@{/signin}" method="post">
+                    <div class="form-group">
+                      <label for="newUsername"> Username: </label>
+                      <span class="error" style="color: red;" th:if="${usernameExists}">
+                        (This username is already used. Choose a different one)</span>
+                      <input type="text" class="form-control"
+                             id="newUsername" name="username" required/>
+                    </div>
+                    <p style="color: #828282">Enter your username here. Choose it wisely because you can't change it in the future.</p>
+
+                    <div class="form-group">
+                      <label for="newEmail"> Email Address: </label>
+                      <span class="error" style="color: red;" th:if="${emailExists}">
+                        (This email it's already used. Choose a different one)</span>
+                      <input type="text" class="form-control"
+                             id="newEmail" name="email" required/>
+                    </div>
+                    <p style="color: #828282">Enter a valid email address here.</p>
+
+                    <div class="form-group">
+                      <label for="newPassword"> Password: </label>
+                      <span class="error" style="color: red;" th:if="${passwordTooShort}">
+                        (This password is too short, insert a longer one)</span>
+                      <input type="text" class="form-control"
+                             id="newPassword" name="password" required/>
+                    </div>
+                    <p style="color: #828282">Enter your password here. It must be at least 6 characters long.</p>
+
+                    <button type="submit" class="btn btn-primary  invisolar-button">Create new account</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Login -->
+          <div class="tab-pane fade" id="tab-2" th:classappend="${classActiveLogin}? 'active show'">
+            <div class="panel-group">
+              <div class="panel panel-default" style="border: none;">
+                <div class="panel-body">
+                  <div th:if="${param.error != null}" style="color:red;">Incorrect username or password.</div>
+                  <form th:action="@{/login}" method="post">
+
+                    <div class="form-group">
+                      <label for="username"> Username: </label>
+                      <input type="text" class="form-control"
+                            id="username" name="username" required/>
+                    </div>
+                    <p style="color: #828282">Enter your username here.</p>
+
+                    <div class="form-group">
+                      <label for="password"> Password: </label>
+                      <input type="password" class="form-control"
+                            id="password" name="password" required/>
+                    </div>
+                    <p style="color: #828282">Enter the password for your username</p>
+                  <!--
+                    <div class="checkbox mt-3 mb-1">
+                      <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                      </label>
+                    </div>
+                   Remember me button -->
+                    <div>
+                      <button type="submit" class="btn btn-primary invisolar-button" >Log in</button>
+                    </div>
+
+                    <div>
+                      <a class="btn btn-link" href="/signin">
+                        Don't have an account? Sign in instead
+                      </a>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Forgot Password
+          <div class="tab-pane fade" id="tab-3" th:classappend="${classActiveForgetPassword}? 'active show'">
+            <div class="panel-group">
+              <div class="panel panel-default" style="border: none;">
+                <div class="panel-body">
+                  <div th:if="${emailNotExist}" class="alert alert-danger">Email doesn't exist.</div>
+                  <div th:if="${forgetPasswordEmailSent}" class="alert alert-success">Email sent.</div>
+                  <form th:action="@{/forgotPassword}" method="post">
+                    <div class="form-group">
+                      <label for="recoverEmail"> Your Email: </label> <input
+                            required="required" type="text" class="form-control"
+                            id="recoverEmail" name="email" />
+                      <p style="color: #828282">Enter your registered email
+                        address here.</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary invisolar-button">Reset Password</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+           </div>
+           -->
+          <p class="mt-2 mb-3 text-muted">&copy; 2023</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
+</body>
+</html>

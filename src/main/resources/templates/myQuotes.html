@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head div th:replace="~{common/header.html :: common-header}"></head>
+
+
+<body class="body">
+<div th:replace="~{common/header :: navbar}"></div>
+
+<div class="flex-wrapper">
+  <!-- Main Container -->
+  <div class="container text-center">
+
+    <h2 class="section-headline text-center pt-4 mb-4">
+      <span th:text="${user.username}"/>'s Quotes
+    </h2>
+    <hr style="alignment: center; border: 1px solid; width: 100%;">
+
+    <div th:if="${!hasQuote}">
+      <h4 class="mt-6"><br>You have no quote yet. Create one clicking the button below.</h4>
+      <a type="button" class="btn btn-primary btn-lg invisolar-button my-4" th:href="@{/configurator}">Go to Configurator</a>
+    </div>
+
+    <div th:if="${hasQuote}">
+      <div class="container mt-3 mb-4">
+
+        <h2 class="my-4">Quote List</h2>
+
+        <table class="table table-sm table-inverse table-hover" id="quoteTable">
+          <thead class="table-dark">
+          <tr>
+            <th>Quote ID</th>
+            <th>Roof System</th>
+            <th>Tiles Style</th>
+            <th>Battery Brand</th>
+            <th>Power demand</th>
+            <th>Price</th>
+            <th>Funding</th>
+            <th>Installments</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="quote : ${quotes}">
+            <td class="w-auto" data-th-text="'#'+${quote.id}"></td>
+            <td class="w-auto" data-th-text="'Solar '+${quote.roofSystem}"></td>
+            <td class="w-auto" data-th-text="${quote.tilesStyle}"></td>
+            <td class="w-auto" data-th-text="${quote.battery}"></td>
+            <td class="w-auto" data-th-text="${quote.powerDemand}+'kW'"></td>
+            <td class="w-auto" data-th-text="${quote.price}+'€'"></td>
+            <td class="w-auto" th:if="${quote.funding}">Yes</td>
+            <td class="w-auto" th:if="${!quote.funding}">No</td>
+            <td class="w-auto" data-th-text="${quote.installments}+'€/Months'"></td>
+            <td class="w-auto"><a type="button" th:href="@{/configurator/deleteQuote(id=${quote.id})}"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><style>svg{fill:#ff0000}</style><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg></a></td>
+          </tr>
+          </tbody>
+        </table>
+
+        <a type="button" class="btn btn-primary btn-lg invisolar-button mt-4 me-4" th:href="@{/configurator}">New Quote</a>
+        <a type="button" class="btn btn-primary btn-lg invisolar-button mt-4 ms-4" th:href="@{/visitBooking}">Book a visit by our technicians</a>
+      </div>
+    </div>
+  </div>
+  <!-- end of Main Container -->
+
+
+  <footer>
+    <div th:replace="~{common/footer.html :: footer}"></div>
+  </footer>
+</div>
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
+</body>
+</html>

@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head div th:replace="~{common/header.html :: common-header}"></head>
 
 <body class="body">
-
-    <div th:replace="~{common/header :: navbar}"></div>
-
+<div th:replace="~{common/header :: navbar}"></div>
+<div class="flex-wrapper">
     <!-- Main Container -->
-    <div class="container" id="carousel-container">
+    <div class="container w-75" id="carousel-container">
 
         <!-- Title -->
         <img src="/image/title.png" id="title-home" class="d-block mx-auto" alt="Solar Roof Title">
+
+        <div sec:authorize="!isAuthenticated()" class="text-center">
+            <h2 class="mt-4">
+                Before you can use the configurator you have to  log in with your profile
+            </h2>
+            <a class="btn btn-primary btn-lg invisolar-button mt-2 mb-3" href="/login">Login</a>
+        </div>
 
         <!-- Carousel -->
         <div id="home-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -24,21 +30,21 @@
                     <img id="item1" src="/image/SR1.jpg" class="d-block w-100" alt="Solar Roof 1">
                     <div class="carousel-caption d-none d-lg-block">
                         <h2>Try to configure your Solar Roof</h2>
-                        <a class="btn btn-primary btn-lg mt-1" href="/configurator">Go to Configurator</a>
+                        <a class="btn btn-primary btn-lg invisolar-button mt-1" href="/configurator">Go to Configurator</a>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="/image/SR2.png" class="d-block w-100" alt="Solar Roof 2">
                     <div class="carousel-caption d-none d-lg-block">
                         <h2>Try to configure your Solar Roof</h2>
-                        <a class="btn btn-primary btn-lg mt-1" href="/configurator">Go to Configurator</a>
+                        <a class="btn btn-primary btn-lg invisolar-button mt-1" href="/configurator">Go to Configurator</a>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="/image/SR3.jpg" class="d-block w-100" alt="Solar Roof 3">
                     <div class="carousel-caption d-none d-lg-block">
                         <h2>Try to configure your Solar Roof</h2>
-                        <a class="btn btn-primary btn-lg mt-1" href="/configurator">Go to Configurator</a>
+                        <a class="btn btn-primary btn-lg invisolar-button mt-1" href="/configurator">Go to Configurator</a>
                     </div>
                 </div>
             </div>
@@ -54,10 +60,10 @@
         <!-- end of Carousel -->
     </div>
     <!-- end of Main Container -->
-
-    <div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
+    <footer>
+        <div th:replace="~{common/footer.html :: footer}"></div>
+    </footer>
+</div>
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
 </body>
-<footer>
-    <div th:replace="~{common/footer.html :: footer}"></div>
-</footer>
 </html>

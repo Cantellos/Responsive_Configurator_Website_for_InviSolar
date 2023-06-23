@@ -1,9 +1,7 @@
 package com.cantelli.invisolar.service.impl;
 
 import com.cantelli.invisolar.domain.User;
-import com.cantelli.invisolar.domain.security.PasswordResetToken;
 import com.cantelli.invisolar.domain.security.UserRole;
-import com.cantelli.invisolar.repository.PasswordResetTokenRepository;
 import com.cantelli.invisolar.repository.RoleRepository;
 import com.cantelli.invisolar.repository.UserRepository;
 import com.cantelli.invisolar.service.UserService;
@@ -12,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Set;
 
 @Service
@@ -24,20 +23,6 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private RoleRepository roleRepository;
-
-	@Autowired
-	private PasswordResetTokenRepository passwordResetTokenRepository;
-
-	@Override
-	public PasswordResetToken getPasswordResetToken(final String token) {
-		return passwordResetTokenRepository.findByToken(token);
-	}
-
-	@Override
-	public void createPasswordResetTokenForUser(final User user, final String token) {
-		final PasswordResetToken myToken = new PasswordResetToken(token, user);
-		passwordResetTokenRepository.save(myToken);
-	}
 
 	@Override
 	public User findByUsername(String username) {

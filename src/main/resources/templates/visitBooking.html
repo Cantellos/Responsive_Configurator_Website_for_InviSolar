@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head div th:replace="~{common/header.html :: common-header}"></head>
+
+<body class="body">
+<div th:replace="~{common/header :: navbar}"></div>
+
+<div class="flex-wrapper">
+<!-- Main Container -->
+<div class="container w-75">
+
+    <div class="text-center pt-4 pb-2">
+        <h2 class="section-headline text-center">
+            <span th:text="${user.username}"></span> - Book a visit
+        </h2>
+    </div>
+    <hr style="alignment: center; border: 1px solid; width: 100%;">
+
+    <div th:if="${!editVisit}">
+        <div th:if="${hasVisit}" class="text-center py-3">
+            <h2 class="section-headline text-center my-3 pt-2">
+                You have already booked a visit, check that one with the button below.
+            </h2>
+            <a type="button" class="btn btn-primary invisolar-button mt-4" th:href="@{/visitBooking/myVisit}">Go to your visit</a>
+        </div>
+
+        <div th:if="${!hasVisit}">
+            <h2 class="section-headline text-center my-4 py-3">
+                Compile the form below with your address information to book a visit by our technicians
+            </h2>
+            <!-- Edit user information -->
+            <div class="container justify-content-center align-content-center">
+                        <div class="container w-75 mx-auto my-4 px-0" style="border: 1px solid black;">
+                            <div class="row g-0">
+                                <div class="col-xl-6">
+                                    <div class="container card-body py-md-4 px-md-5 text-black text-center">
+
+                                        <h3 class="mb-4 text-uppercase">Visit Info</h3>
+
+                                        <form class="form" th:action="@{/visitBooking/newVisit}" method="post">
+
+
+                                            <div class="form-group">
+                                                <div class="form-outline mb-4">
+                                                    <label for="city">City:</label>
+                                                    <input type="text" class="form-control"
+                                                           id="city" name="city" required/>
+                                                </div>
+                                                <div class="form-outline mb-4">
+                                                    <label for="address">Address:</label>
+                                                    <input type="text" class="form-control"
+                                                           id="address" name="address" required/>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4">
+                                                        <div class="form-outline">
+                                                            <label for="zip">Zip code:</label>
+                                                            <input type="text" class="form-control pb-1"
+                                                                   id="zip" name="zip" required/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <label for="state">State:</label>
+                                                        <select id="state" name="state" class="form-select mt-1" required>
+                                                            <option value="Italy">Italy</option>
+                                                            <option value="Germany">Germany</option>
+                                                            <option value="France">France</option>
+                                                            <option value="England">England</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4">
+
+                                                        <label for="date">Date:</label>
+                                                            <input type="date" class="form-control" id="date"
+                                                               name="date" min="2023-06-24" max="2024-12-31" required/>
+
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <label for="hour">Hour:</label>
+                                                        <select id="hour" name="hour" class="form-select mt-1" required>
+                                                            <option value="8">8:00</option>
+                                                            <option value="9">9:00</option>
+                                                            <option value="10">10:00</option>
+                                                            <option value="11">11:00</option>
+                                                            <option value="12">12:00</option>
+                                                            <option value="13">13:00</option>
+                                                            <option value="14">14:00</option>
+                                                            <option value="15">15:00</option>
+                                                            <option value="16">16:00</option>
+                                                            <option value="17">17:00</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center">
+                                                <button type="submit" class="btn btn-primary invisolar-button" style="font-size: 24px;">Book your visit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 d-xl-block bg-image" style="border-left: 1px solid black;">
+                                    <div class="image-container">
+                                        <img src="/image/visitForm.jpg" alt="Avatar" class="img-fluid visitImage" style="width: auto; height: auto;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${editVisit}">
+        <h2 class="section-headline text-center my-3 pt-2">
+            Edit your visit info
+        </h2>
+        <!-- Edit user information -->
+        <div class="container justify-content-center align-content-center">
+            <div class="card w-50 mx-auto my-4 shadow-3" style="border: 1px solid black;">
+
+
+
+                        <div class="container card-body py-md-4 px-md-5 text-black text-center">
+
+                            <h3 class="mb-4 text-uppercase">Visit info</h3>
+
+                            <form class="form" th:action="@{/visitBooking/editVisit}" method="post">
+
+
+                                <div class="form-group">
+                                    <div class="form-outline mb-4">
+                                        <label for="city">City:</label>
+                                        <input type="text" class="form-control"
+                                               id="city" name="city" th:value="${visit.city}" required/>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <label for="address">Address:</label>
+                                        <input type="text" class="form-control"
+                                               id="address" name="address" th:value="${visit.address}" required/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <label for="zip">Zip code:</label>
+                                                <input type="text" class="form-control pb-1"
+                                                       id="zip" name="zip" th:value="${visit.zip}" required/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label for="state">State:</label>
+                                            <select id="state" name="state" class="form-select mt-1" th:field="${visit.state}" required>
+                                                <option value="Italy">Italy</option>
+                                                <option value="Germany">Germany</option>
+                                                <option value="France">France</option>
+                                                <option value="England">England</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+
+                                            <label for="date">Date:</label>
+                                            <input type="date" class="form-control" id="date" name="date"
+                                                   min="2023-06-24" max="2024-12-31" th:value="${visit.date}" required/>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label for="hour">Hour:</label>
+                                            <select id="hour" name="hour" class="form-select mt-1" th:field="${visit.hour}" required>
+                                                <option value="8">8:00</option>
+                                                <option value="9">9:00</option>
+                                                <option value="10">10:00</option>
+                                                <option value="11">11:00</option>
+                                                <option value="12">12:00</option>
+                                                <option value="13">13:00</option>
+                                                <option value="14">14:00</option>
+                                                <option value="15">15:00</option>
+                                                <option value="16">16:00</option>
+                                                <option value="17">17:00</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-primary invisolar-button" style="font-size: 24px;">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- end of Main Container -->
+    <footer>
+        <div th:replace="~{common/footer.html :: footer}"></div>
+    </footer>
+</div>
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
+</body>
+</html>

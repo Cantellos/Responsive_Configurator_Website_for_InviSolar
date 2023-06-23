@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head div th:replace="~{common/header.html :: common-header}"></head>
+
+<body class="body">
+<div th:replace="~{common/header :: navbar}"></div>
+
+<div class="flex-wrapper">
+    <!-- Main Container -->
+    <div class="container text-center">
+
+        <h2 class="section-headline text-center pt-4 mb-4">
+            <span th:text="${user.username}"/>'s Booked Visit
+        </h2>
+        <hr style="alignment: center; border: 1px solid; width: 100%;">
+
+        <div th:if="${!hasVisit}">
+            <h4 class="mt-6"><br>You have not yet booked a visit. Book one clicking the button below.</h4>
+            <a type="button" class="btn btn-primary btn-lg invisolar-button my-4" th:href="@{/visitBooking}">Book a visit</a>
+        </div>
+
+        <div th:if="${hasVisit}">
+            <table class="table table-hover table-fixed mt-5 w-50 mx-auto">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Options Name</th>
+                    <th scope="col">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">Date</th>
+                    <td data-th-text="${visit.date}"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Hour</th>
+                    <td data-th-text="${visit.hour}+':00'"></td>
+                </tr>
+                <tr>
+                    <th scope="row">City</th>
+                    <td data-th-text="${visit.city}"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Address</th>
+                    <td data-th-text="${visit.address}"></td>
+                </tr>
+                    <th scope="row">Zip Code</th>
+                    <td data-th-text="${visit.zip}"></td>
+                </tr>
+                    <th scope="row">State</th>
+                    <td data-th-text="${visit.state}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <a type="button" class="btn btn-primary btn-lg invisolar-button mt-4 me-4" th:href="@{/visitBooking/goEdit}">Edit your visit</a>
+            <a type="button" class="btn btn-primary btn-lg invisolar-button mt-4 me-4" th:href="@{/visitBooking/deleteVisit}">Delete your visit</a>
+        </div>
+    </div>
+    <!-- end of Main Container -->
+    <footer>
+        <div th:replace="~{common/footer.html :: footer}"></div>
+    </footer>
+</div>
+<div th:replace="~{common/header.html :: body-bottom-scripts}"></div>
+</body>
+</html>

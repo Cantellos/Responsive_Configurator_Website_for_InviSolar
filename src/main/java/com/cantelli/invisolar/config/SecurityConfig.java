@@ -35,39 +35,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/video/**",
 			"/",
 			"/index",
-			"/login",
 			"/forgotPassword",
+			"/login",
 			"/signin",
+			"/myAccount",
 			"/faq",
 			"/about",
 			"/fonts/**"
+
 	};
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.authorizeRequests().
-                /*	antMatchers("/**"). */
+				/*	antMatchers("/**").*/
 						antMatchers(PUBLIC_MATCHERS).
-                permitAll().anyRequest().authenticated();
+				permitAll().anyRequest().authenticated();
 
-        http
+		http
 				.csrf().disable().cors().disable()
-				.formLogin()
+				.formLogin().failureUrl("/login?error")
+				//.defaultSuccessUrl("/")
 				.loginPage("/login").permitAll()
-				.failureUrl("/login-error")
-				/*.defaultSuccessUrl("/")*/
 				.and()
 				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/index").deleteCookies("remember-me").permitAll()
+				.logoutSuccessUrl("/?logout").deleteCookies("remember-me").permitAll()
 				.and()
-				.rememberMe()
-				.and().exceptionHandling().accessDeniedPage("/?accessDenied");
+				.rememberMe();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
-    }
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
+	}
+
 
 }
