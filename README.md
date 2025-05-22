@@ -1,6 +1,6 @@
 # Responsive Configurator Website for InviSolar
 
-This project is a responsive web application designed for InviSolar, enabling users to configure solar panel installations interactively. Built with modern web technologies, it ensures optimal performance across various devices and screen sizes.
+This project is a responsive web application designed for InviSolar, enabling users to configure solar panel installations interactively.
 
 ## 🌐 Features
 
